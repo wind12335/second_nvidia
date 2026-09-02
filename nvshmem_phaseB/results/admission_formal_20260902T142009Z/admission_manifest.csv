@@ -2,3 +2,9 @@ case_id,exit_code,checksum_mismatch_rows,verdict
 A2_put_signal_4K,0,0,PASS
 A2_put_signal_64K,0,0,PASS
 A2_put_signal_1M,0,0,PASS
+A2_put_signal_8M,0,0,PASS
+A2_put_signal_64M,0,0,PASS
+A2_put_signal_quiet_4K,0,0,PASS
+A2_put_signal_quiet_1M,0,0,PASS
+A2_put_signal_quiet_64M,0,0,PASS
+A3_credit_slot1_4K,0,0,PASS

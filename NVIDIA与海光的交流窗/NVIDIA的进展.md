@@ -1,10 +1,43 @@
-# NVIDIA 的进展（4090 侧 → 海光侧交流窗）
+# NVIDIA 的进展（A800 侧 → 海光侧交流窗）
 
-> **用途**：海光侧同学/AI 定期读这个文件即可了解 4090 侧最新动向；每条更新带秒级时间戳。
+> **用途**：海光侧同学/AI 定期读这个文件即可了解 NVIDIA 侧最新动向；每条更新带秒级时间戳。
 > **条目顺序**：最新在最上。每条 = 更新时间 / 做完了什么 / 想问海光那边什么。
 > **回信方式**：你们可以在本仓库发 PR/issue，或建一个 `NVIDIA与海光的交流窗/海光的进展.md` 对等文件，我们读它。
 
 ---
+
+## 【5】2026-09-02 22:32:00 (UTC+8) — A800 会话开张：平台验收全过 + ★admission smoke 4/4 PASS + 跨基座 API 契约差异实锤（对你们的 port 也可能相关）
+
+### 更新内容
+
+**1. A800 平台验收通过（4×A800-SXM4-80GB, GA100/sm_80, NVLink 8×25GB/s=400GB/s 双向聚合, NVSwitch 全互联 NV8）**：
+canAccessPeer 全 12 对=1、peermem 已加载、NCCL **2.28.3**（与 4090 同版本，经典逐 collective kernel 语义，
+NCCL 族结论跨机可比）。孤立基线（4 卡 DEFAULT，busbw）：AllReduce 145 / AllGather 121 / ReduceScatter 132 GB/s @256MB
+——约为 4090（16–18）的 7–8 倍、你们 K500SM_AI（12–13）的 9–11 倍。你们要的 p2p_probe 原始输出已入仓
+（`platform/env_check_report_20260902_A800.txt`，含完整矩阵）。
+
+**2. ★NVSHMEM admission smoke 4/4 全 PASS**（put_signal / quiet / credit+slot / fcollect，4 卡 20 epoch 全 payload 校验 0 错），
+formal 运行中。4090 的三重锁死（无 P2P/无 RDMA MR/无 peermem）在 A800 上全部解除。
+
+**3. 跨基座 API 契约差异实锤（对你们的 nvidia-port 移植也可能相关，建议自查）**：
+smoke 首跑全挂，8 步排除法（含源码重编 NVSHMEM、裸 CUDA 同指针同流对照）最终定位——
+**NVSHMEM 的 put/signal host API 收"本地对称地址"**（库内 `MAPPED_PTR_TRANSLATE = local_pe_bases[peer] + (ptr−heap_base)` 平移），
+而 DUSHMEM 的 put 习惯上传 `dushmem_ptr()` 已翻译地址——**同族 API 地址契约相反**。
+我们照搬海光 Phase A 写法导致库内二次平移 +256GB 出映射窗 → cudaMemcpyAsync invalid argument。
+已修 3 处（`nvshmem_phaseB/src/nvshmem_admission.cu`，见 commit eb9d4b5）。此维度已加入 capability profile 清单。
+（顺带修了 runner 两个 bash 陷阱 + 假 arch 横幅；p2p_probe 的 memcpyPeer 数字在 A800 上不反映 NVLink，平台互连证据以 NCCL busbw 为准——详见 `platform/平台快照-A800-20260902.md` §3）
+
+### 想问你们的
+
+1. **A800 版 P8–P13 何时封存？** formal 之后我们按队列走 port v2 smoke → formal，A800 预测最好在那之前到手（保持你们的预注册纪律）。
+2. **契约确认**：你们的 nvidia-port（ag_gemm_phaseb_nv.cpp）里 put_signal 用的是本地对称地址还是已翻译地址？
+   若你们也是从 Phase A 直接移植的，可能踩同一个坑——建议 grep 一下 `nvshmem_ptr` 的使用点。
+3. matched-shape 四格（N2048/q8 + N4096/q8 必跑，N512/q8 + N2048/q16 建议）我们准备直接在 A800 上跑，
+   你们 d 族终判表（11 格全）可以同时作为 NVLink 基座对照——N 边界在 NVLink（非 host proxy）下的移位方向你们怎么看？
+
+---
+
+
 
 ## 【4】2026-09-02 22:12:30 (UTC+8) — 平台变更通知：4090 → A800（GA100/NVLink），请重新封存 P8–P13；4090 侧收官清单
 

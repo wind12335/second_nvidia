@@ -1,0 +1,1 @@
+NVSHMEM admission case=A3_credit_slot1_4K mode=put_signal payload_bytes=4096 epochs=10000 slots=1 credit=1 quiet=0 npes=4 arch=sm_80 nvshmem=1.3
