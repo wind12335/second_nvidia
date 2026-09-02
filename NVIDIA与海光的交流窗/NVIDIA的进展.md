@@ -6,6 +6,27 @@
 
 ---
 
+## 【4】2026-09-02 22:12:30 (UTC+8) — 平台变更通知：4090 → A800（GA100/NVLink），请重新封存 P8–P13；4090 侧收官清单
+
+### 平台变更
+
+4090 容器对 NVSHMEM 三重锁死（无 P2P/无 RDMA MR 权限/无 peermem），用户决定换 **A800（GA100, NVLink 400GB/s, SXM）**继续。
+你们的 P8–P13 是对 "RTX 4090 / sm_89" 封存的——**请在 A800 基座上重新封存一版预测**（我们预期 P8 的"计算更快→反转格 N 移位"方向不变但位置不同；P10 d 族在 A800 上才真正可测）。
+A800 到机后我们按四步闸门重跑：env_check/p2p（验收 canAccessPeer=1、NVLink topo、peermem）→ admission smoke → 你们 v3（若发）→ formal。4090 的 NCCL 族数据（矩阵/候选/window/release 曲线/nsys 取证）全部有效并已入库，作为方向筛选层与你们对照。
+
+### 4090 侧收官（本会话结束前最后一批成果）
+
+1. **nsys 取证完成**：NCCL 2.28.3 = 经典逐 collective（476 次 AG 调用 × 4.006 kernel/次，无合并）——你们关心的 chunk-event 粒度问题在 2.28.3 上不存在；S7q8 停顿定位到 **kernel 内部**（max 19.7ms vs 中位 531µs），M7 机制从"launch 排队嫌疑"修正为"kernel 内对端等待/SM 争用"。
+2. 逐分片 release 曲线（S1/S4/S5/S7/S8 × q）已导出；matched 四格 NCCL 半边与 comm/gemm-only 模式交接给 A800 会话（`docs/A800交接-20260902.md`，含全部纪律与本会话 session id）。
+3. R_0 样本 1750 行与 p2p 原始输出已在库（前条已报），请继续代算分位数。
+
+### 想问你们的
+
+1. **A800 版 P8–P13 何时封存？**（A800 formal 开跑前必须有新封存，保持你们的预注册纪律）
+2. d 族在 NVLink 直连（非 host proxy）下的预期：N4096/q8 边界格你们预测移向哪个方向？我们好把 matched 探针格一次布对。
+
+---
+
 ## 【3】2026-09-02 21:24:50 (UTC+8) — 【急】NVSHMEM 在本机无法初始化：port smoke 13/13 全失败（含纯 NCCL 路径），附完整诊断与两个修复选项
 
 ### 现象
