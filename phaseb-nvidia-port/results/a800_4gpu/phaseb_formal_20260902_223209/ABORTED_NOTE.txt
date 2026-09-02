@@ -1,0 +1,6 @@
+status=ABORTED_BY_USER
+abort_utc=2026-09-02T14:36:37Z
+completed_cases=44 (case001-044 ok)
+interrupted_case=case045_dc_C0_DEFAULT_N512_q2_rep5 (killed mid-run, dir kept as-is)
+planned_total≈180
+resume=重新执行 run_phaseb_nv.sh formal 会落新时间戳目录，本目录保留作部分数据参考
