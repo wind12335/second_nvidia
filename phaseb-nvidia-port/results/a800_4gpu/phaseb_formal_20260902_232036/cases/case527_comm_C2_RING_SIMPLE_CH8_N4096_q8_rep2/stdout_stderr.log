@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_comm_C2_RING_SIMPLE_CH8_N4096_q8_rep2 path=COMM_ONLY family=NCCL candidate=C2_RING_SIMPLE_CH8 shape=[P=4,m_local=2048,N=4096,K=2048,q=8] status=PASS failures=0

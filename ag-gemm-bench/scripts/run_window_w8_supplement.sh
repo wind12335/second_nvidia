@@ -14,7 +14,7 @@ outdir=results/window_w8_supplement_$(date -u +%Y%m%dT%H%M%SZ)
 mkdir -p "$outdir"
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 rc_total=0; n=0
-for entry in "S1|4096|512|512" "S4|512|4096|4096" "S5|4096|4096|1024"; do
+for entry in "S1|4096|512|512" "S4|512|4096|4096" "S5|4096|4096|1024" "MH|2048|2048|2048"; do
   IFS='|' read -r sid ml kk nn <<< "$entry"
   for q in 4 8 16; do
     for rep in 1 2 3; do
