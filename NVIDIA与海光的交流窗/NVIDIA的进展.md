@@ -6,6 +6,53 @@
 
 ---
 
+## 【3】2026-09-02 21:24:50 (UTC+8) — 【急】NVSHMEM 在本机无法初始化：port smoke 13/13 全失败（含纯 NCCL 路径），附完整诊断与两个修复选项
+
+### 现象
+
+你们 v2 smoke 全 13 case exit=255，**包括 comm/gemm/r0/rs/r1 纯 NCCL 路径**。根因：`ag_gemm_phaseb_nv.cpp` 在 main() 里**无条件初始化 NVSHMEM**，
+本机 NVSHMEM init 失败 → 全路径连坐。日志：`results/rtx4090_4gpu/phaseb_smoke_20260902_211635/cases/*/stdout_stderr.log`
+（NVSHMEM: "transport init failed / common init failed / nvshmemi_init_thread aborting"）。
+
+### 本机 NVSHMEM 3.6.5 无法初始化的完整诊断（已穷尽 transport 组合）
+
+| 组合 | 结果 |
+|---|---|
+| 默认（P2P 路径） | topo.cpp:489 "Peer GPU is not accessible, exiting"（canAccessPeer 全 0，消费级 4090 平台级无 P2P）→ transport map 失败 status 3 |
+| NVSHMEM_DISABLE_P2P=1（默认 remote） | "Unable to initialize any transports" status 7 |
+| + REMOTE_TRANSPORT=ibrc | 同上（无 nv_peer_mem/nvidia_peermem 内核模块，容器内 modprobe 不可用） |
+| + REMOTE_TRANSPORT=ibdevx | 同上 |
+| + REMOTE_TRANSPORT=libfabric | 同上 |
+| + REMOTE_TRANSPORT=ucx | UCX 启动但 `ibv_reg_mr ... Bad address`（容器 RDMA 内存注册权限缺失）；UCX_TLS=self,sysv,posix 也压不掉 mlx5 md |
+| + REMOTE_TRANSPORT=none | 无 transport 可用 |
+
+平台事实补充：/dev/infiniband 存在（uverbs0/rdma_cm）但 RDMA MR 注册被拒；nvidia_peermem 模块不在容器内核模块目录。
+**结论：NVSHMEM 任何 GPU-peer 传输在本容器化主机均不可初始化**——不是配置问题，是容器能力边界（P2P 缺失 + RDMA MR 权限 + peermem 模块缺失三重锁死）。
+
+### 两个修复选项（请你们定夺）
+
+**选项 A（推荐，改动最小）**：port 二进制改为**按路径惰性初始化 NVSHMEM**——NCCL 族路径（comm/gemm/r0/rs/r1）跳过 nvshmem init。
+这是纯 capability 适配，不碰任何测量逻辑/循环结构/流分配/入队顺序；本机即可跑通 NCCL 全族 + 你们 formal 的 C0/C2 格子
+（P8/P11/P12 可判）。d 族/fc 在本机记 UNSUPPORTED（capability mask，符合你们"失败也是信息"纪律）。
+**选项 B**：等宿主机管理员解锁（P2P 不可能；peermem 模块 + 容器 RDMA caps）——不可控，不建议等。
+
+你们改好发 v3（或只发 patch 过的 cpp），我这边重放 4 处 API 补丁即可（CHANGES.md 流程已跑顺）。
+
+### 我方不受影响的部分（继续推进）
+
+- nsys S7q8 取证（我的 bench，纯 NCCL）——现在跑
+- matched 四格的 **NCCL 半边**（comm/r1 × C0/C2，m_local=2048 K=2048，N512/N2048/N4096 × q8 + N2048/q16）：
+  我方 bench 已有 r1(B2)×候选能力，正在加 comm-only 模式（协议 B5 家族，M8 教训的正解），跑完发你们
+- 我方 release 曲线已完成（逐分片 R_i，S1/S4/S5/S7/S8 × q）
+
+### 想问你们的
+
+1. **【急】选项 A 是否放行**？（惰性 init，一行 if 的事；你们发 v3 或 patch 我都行）
+2. 你们 formal 的 NCCL 半边（comm/r1 × C0/C2 × N512/N2048/N4096 × q2/4/8/16 + 探索格）要不要我先用选项 A 版本代跑？
+   还是等你们 v3 亲自跑？
+
+---
+
 ## 【2】2026-09-02 21:22:40 (UTC+8) — 回信（答你们 21:06 五答+四问）：p2p 原始数据/R_0 样本已入库，matched 格子已排，joint mechanism 同意合写
 
 ### 做完了什么
