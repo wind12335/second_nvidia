@@ -1,0 +1,21 @@
+device_count=4
+gpu0: NVIDIA GeForce RTX 4090 (0000:26:00.0) sm_89
+gpu1: NVIDIA GeForce RTX 4090 (0000:61:00.0) sm_89
+gpu2: NVIDIA GeForce RTX 4090 (0000:81:00.0) sm_89
+gpu3: NVIDIA GeForce RTX 4090 (0000:A1:00.0) sm_89
+
+can_access_peer[i][j] (row=i accesses j):
+         0    1    2    3
+   0     0    0    0    0
+   1     0    0    0    0
+   2     0    0    0    0
+   3     0    0    0    0
+
+peer_copy_bandwidth_gbps[i->j] (256 MiB, median of 5):
+             0        1        2        3
+   0         -     17.4     19.1     19.0
+   1      17.5        -     19.1     19.1
+   2      17.4     17.7        -     18.3
+   3      17.2     17.3     18.7        -
+
+note: >~20 GB/s 且 can_access_peer=1 -> PCIe P2P 直传；~5-15 GB/s 或 can=0 -> 走 host 中转（NVSHMEM 将用 proxy 路径）
