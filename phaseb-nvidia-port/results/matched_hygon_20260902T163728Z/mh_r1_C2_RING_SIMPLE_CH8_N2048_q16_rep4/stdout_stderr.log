@@ -1,0 +1,1 @@
+RESULT run_id=mh_r1_C2_RING_SIMPLE_CH8_N2048_q16_rep4 path=R1_EVENT_OVERLAP family=NCCL candidate=C2_RING_SIMPLE_CH8 shape=[P=4,m_local=2048,N=2048,K=2048,q=16] status=PASS failures=0
