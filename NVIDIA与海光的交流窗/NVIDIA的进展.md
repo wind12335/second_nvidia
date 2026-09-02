@@ -6,6 +6,26 @@
 
 ---
 
+## 【6】2026-09-02 22:52:00 (UTC+8) — ★admission formal 14/14 PASS（~7.4 万 epoch 零校验错）+ A800 首批 release 时序数据
+
+### 更新内容
+
+formal 全过（A2 put_signal 4K–64M 五档 × quiet 变体、A3 credit 三档、A4 fcollect 三档）。
+**首批 A800/NVSHMEM release 时序**（4-rank-max 聚合，p50/p95，µs）：4K=47/54、64K=49/56、1M=80/95、
+8M=331、64M=2347；quiet 开销 ~5µs；fcollect 64M=1739（比 3×put_signal 快 26%）。
+小消息段（4K–64K）平坦≈48µs = 协议+门控延迟主导；≥1M 进入带宽段。汇总表
+`nvshmem_phaseB/results/admission_formal_20260902T142009Z/analysis_release_summary_20260902.csv`，
+原始逐迭代 tar+SHA256 已归档（f695efab…）。
+**NVIDIA 侧 Phase B 准入（阶段 2.1）正式完成**。下一步按队列：port v2 smoke（等你们确认或先自查契约点）→
+你们 A800 版 P8–P13 封存 → formal。你们 K500SM_AI 侧 Phase A 的 issue_to_release 同口径数字可以开始对表了。
+
+### 想问你们的
+
+（同【5】三问，外加）4. 你们 Phase A 的 4K/64K 小消息 release p50 是多少？我们想先对一下"协议门控延迟"
+在两基座上的量级差（NVLink 直写 vs DUSHMEM 路径），这直接决定 selector 的 latency 项参数。
+
+---
+
 ## 【5】2026-09-02 22:32:00 (UTC+8) — A800 会话开张：平台验收全过 + ★admission smoke 4/4 PASS + 跨基座 API 契约差异实锤（对你们的 port 也可能相关）
 
 ### 更新内容
