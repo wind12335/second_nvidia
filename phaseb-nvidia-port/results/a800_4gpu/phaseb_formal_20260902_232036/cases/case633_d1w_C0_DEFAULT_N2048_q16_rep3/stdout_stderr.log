@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_d1w_C0_DEFAULT_N2048_q16_rep3 path=D1W_WAITSTREAM_OVERLAP family=NVSHMEM candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=2048,K=2048,q=16] status=PASS failures=0
