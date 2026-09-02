@@ -6,7 +6,10 @@ PREFIX=${1:-$(dirname "$0")/../../nvshmem-3.6.5-wheel}
 WHEEL=$(python3 -c 'import nvidia.nvshmem as m; print(m.__path__[0] if m.__file__ is None else __import__("os").path.dirname(m.__file__))')
 mkdir -p "$PREFIX/lib/cmake/nvshmem"
 ln -sfn "$WHEEL/include" "$PREFIX/include"
-for f in libnvshmem_host.so libnvshmem_host.so.3 libnvshmem_device.a \
+# 2026-09-02 A800 修复：wheel 只有 libnvshmem_host.so.3（无未版本号 .so），
+# 未版本号链接改为指向 prefix 内的版本号文件（相对链接），避免悬空导致 CMake "no rule to make target"
+ln -sfn libnvshmem_host.so.3 "$PREFIX/lib/libnvshmem_host.so"
+for f in libnvshmem_host.so.3 libnvshmem_device.a \
          nvshmem_bootstrap_mpi.so.3 nvshmem_bootstrap_uid.so.3 nvshmem_bootstrap_shmem.so.3 nvshmem_bootstrap_pmi.so.3; do
   ln -sfn "$WHEEL/lib/$f" "$PREFIX/lib/$f"
 done

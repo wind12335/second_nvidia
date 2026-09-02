@@ -1,0 +1,6 @@
+# case_id,mode,payload_bytes,epochs,slots,credit,quiet,credit_quiet,timeout_seconds
+A2_put_signal_4K_smoke,put_signal,4096,20,1,0,0,1,300
+A2_put_signal_quiet_4K_smoke,put_signal,4096,20,1,0,1,1,300
+A3_credit_slot2_64K_smoke,put_signal,65536,20,2,1,0,1,300
+A4_fcollect_4K_smoke,fcollect,4096,20,1,0,0,1,300
+

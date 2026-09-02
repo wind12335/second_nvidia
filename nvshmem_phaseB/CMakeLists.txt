@@ -26,8 +26,12 @@ target_link_libraries(nvshmem_admission PRIVATE
   CUDA::cuda_driver
   nvshmem::nvshmem_host
   nvshmem::nvshmem_device)
+# 2026-09-02 A800 会话：默认 sm_80（A800/GA100）；4090 时代为 89。可用 -DCUDA_ARCH_OVERRIDE=89 覆盖
+if(NOT CUDA_ARCH_OVERRIDE)
+  set(CUDA_ARCH_OVERRIDE 80)
+endif()
 set_target_properties(nvshmem_admission PROPERTIES
-  CUDA_ARCHITECTURES "89"
+  CUDA_ARCHITECTURES "${CUDA_ARCH_OVERRIDE}"
   CUDA_SEPARABLE_COMPILATION ON
   POSITION_INDEPENDENT_CODE ON
   BUILD_RPATH "${NVSHMEM_PREFIX}/lib"
