@@ -1,0 +1,9 @@
+run_id=preflight2
+timestamp_utc=2026-09-02T16:31:07Z
+rank=0/2
+local_rank=0
+cuda_device=0
+gpu_model=NVIDIA A800-SXM4-80GB
+dimensions=M=256,N=128,K=128
+q=4
+window=2

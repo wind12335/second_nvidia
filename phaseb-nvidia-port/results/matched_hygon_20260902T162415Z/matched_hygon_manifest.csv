@@ -69,3 +69,7 @@ mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep2,2048,16,comm,C2_RING_SIMPLE_CH8,2,0,/r
 mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep3,2048,16,comm,C2_RING_SIMPLE_CH8,3,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep3
 mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep4,2048,16,comm,C2_RING_SIMPLE_CH8,4,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep4
 mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep5,2048,16,comm,C2_RING_SIMPLE_CH8,5,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_comm_C2_RING_SIMPLE_CH8_N2048_q16_rep5
+mh_r1_C0_DEFAULT_N2048_q16_rep1,2048,16,r1,C0_DEFAULT,1,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_r1_C0_DEFAULT_N2048_q16_rep1
+mh_r1_C0_DEFAULT_N2048_q16_rep2,2048,16,r1,C0_DEFAULT,2,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_r1_C0_DEFAULT_N2048_q16_rep2
+mh_r1_C0_DEFAULT_N2048_q16_rep3,2048,16,r1,C0_DEFAULT,3,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_r1_C0_DEFAULT_N2048_q16_rep3
+mh_r1_C0_DEFAULT_N2048_q16_rep4,2048,16,r1,C0_DEFAULT,4,0,/root/second_nvidia/phaseb-nvidia-port/results/matched_hygon_20260902T162415Z/mh_r1_C0_DEFAULT_N2048_q16_rep4
