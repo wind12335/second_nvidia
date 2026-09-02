@@ -1,0 +1,1 @@
+NVSHMEM admission case=A3_credit_slot2_64K_smoke mode=put_signal payload_bytes=65536 epochs=20 slots=2 credit=1 quiet=0 npes=4 arch=sm_80 nvshmem=1.3

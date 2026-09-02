@@ -65,7 +65,9 @@ int main(int argc, char** argv) {
     } else if (strcmp(mode,"self_on_stream")==0) {
       nvshmemx_putmem_signal_on_stream(buf, buf, bytes, sig, 42, NVSHMEM_SIGNAL_SET, 0, s);
     } else {
-      nvshmemx_putmem_signal_on_stream(rbuf, buf, bytes, rsig, 42, NVSHMEM_SIGNAL_SET, 1, s);
+      // API 契约修正(2026-09-02): 传本地对称地址，库内部做 MAPPED_PTR_TRANSLATE；
+      // 传 nvshmem_ptr 翻译过的远端地址会被二次平移(+256GB 出窗)→ invalid argument
+      nvshmemx_putmem_signal_on_stream(buf, buf, bytes, sig, 42, NVSHMEM_SIGNAL_SET, 1, s);
     }
     printf("pe0 issue done (mode=%s)\n", mode); fflush(stdout);
     nvshmemx_quiet_on_stream(s);

@@ -1,0 +1,5 @@
+case_id,exit_code,checksum_mismatch_rows,verdict
+A2_put_signal_4K_smoke,0,0,PASS
+A2_put_signal_quiet_4K_smoke,0,0,PASS
+A3_credit_slot2_64K_smoke,0,0,PASS
+A4_fcollect_4K_smoke,0,0,PASS

@@ -19,7 +19,7 @@ run_case() {
   local case_dir="$outdir/$case_id"
   mkdir -p "$case_dir"
   set +e
-  timeout "$timeout" mpirun --allow-run-as-root --bind-to none -np "$ranks" "$bin" \
+  timeout "$timeout" mpirun --allow-run-as-root --bind-to none -np "$ranks" "$bin" < /dev/null \
     --case-id "$case_id" --mode "$mode" --payload-bytes "$payload" \
     --epochs "$epochs" --slots "$slots" --credit "$credit" --quiet "$quiet" \
     --credit-quiet "$credit_quiet" --expected-pes "$ranks" \
@@ -31,7 +31,7 @@ run_case() {
   for f in "$case_dir"/raw/rank_*.csv; do
     [[ -e "$f" ]] || continue
     m=$(awk -F, 'NR>1 && $11 != 0' "$f" | wc -l)
-    (( mism += m ))
+    mism=$((mism + m))
   done
   local verdict=FAIL
   if [[ $rc -eq 0 && $mism -eq 0 ]]; then verdict=PASS; fi

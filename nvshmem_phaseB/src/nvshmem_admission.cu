@@ -141,6 +141,7 @@ int main(int argc, char** argv) {
   int npes = nvshmem_n_pes();
   int device = nvshmem_team_my_pe(NVSHMEMX_TEAM_NODE);
   CUDA_CHECK(cudaSetDevice(device));
+  cudaDeviceProp prop{}; CUDA_CHECK(cudaGetDeviceProperties(&prop, device));
   if (npes != world) fail("NVSHMEM PE count differs from MPI world", rank);
 
   const std::size_t words = o.payload_bytes / sizeof(std::uint32_t);
@@ -172,7 +173,9 @@ int main(int argc, char** argv) {
     std::cout << "NVSHMEM admission case=" << o.case_id << " mode=" << o.mode
               << " payload_bytes=" << o.payload_bytes << " epochs=" << o.epochs
               << " slots=" << o.slots << " credit=" << o.credit
-              << " quiet=" << o.quiet << " npes=" << npes << " arch=sm_89\n";
+              << " quiet=" << o.quiet << " npes=" << npes
+              << " arch=sm_" << prop.major << prop.minor
+              << " nvshmem=" << (NVSHMEM_MAJOR_VERSION) << "." << (NVSHMEM_MINOR_VERSION) << "\n";
   }
 
   const int block = 256;
@@ -195,11 +198,12 @@ int main(int argc, char** argv) {
     CUDA_CHECK(cudaMemcpyAsync(local_dst, source, o.payload_bytes, cudaMemcpyDeviceToDevice, comm_stream));
     if (o.mode == "put_signal") {
       for (int peer = 0; peer < npes; ++peer) if (peer != pe) {
-        auto* remote_recv = static_cast<std::uint32_t*>(nvshmem_ptr(recv, peer)) +
-            static_cast<std::size_t>(slot) * slot_words + static_cast<std::size_t>(pe) * words;
-        auto* remote_signal = static_cast<std::uint64_t*>(nvshmem_ptr(signals, peer)) +
-            static_cast<std::size_t>(pe) * o.slots + slot;
-        nvshmemx_putmem_signal_on_stream(remote_recv, source, o.payload_bytes, remote_signal,
+        // 2026-09-02 A800 契约修正：NVSHMEM put 系 API 收"本地对称地址"，库内部平移到目标 PE；
+        // 传 nvshmem_ptr() 结果会被二次平移(+256GB 出窗)→cudaMemcpyAsync invalid argument（mini_sig 已复现验证）
+        auto* sym_recv = recv + static_cast<std::size_t>(slot) * slot_words +
+            static_cast<std::size_t>(pe) * words;
+        auto* sym_signal = signals + static_cast<std::size_t>(pe) * o.slots + slot;
+        nvshmemx_putmem_signal_on_stream(sym_recv, source, o.payload_bytes, sym_signal,
                                          static_cast<std::uint64_t>(epoch), NVSHMEM_SIGNAL_SET,
                                          peer, comm_stream);
       }
@@ -226,9 +230,8 @@ int main(int argc, char** argv) {
     if (o.credit) {
       CUDA_CHECK(cudaStreamSynchronize(compute_stream));
       for (int consumer = 0; consumer < npes; ++consumer) if (consumer != pe) {
-        auto* remote_credit = static_cast<std::uint64_t*>(nvshmem_ptr(credits, consumer)) +
-            static_cast<std::size_t>(pe) * o.slots + slot;
-        nvshmemx_signal_op_on_stream(remote_credit, static_cast<std::uint64_t>(epoch),
+        auto* sym_credit = credits + static_cast<std::size_t>(pe) * o.slots + slot;  // 契约修正，同上
+        nvshmemx_signal_op_on_stream(sym_credit, static_cast<std::uint64_t>(epoch),
                                      NVSHMEM_SIGNAL_SET, consumer, compute_stream);
       }
       if (o.credit_quiet) nvshmemx_quiet_on_stream(compute_stream);

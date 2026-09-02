@@ -1,0 +1,1 @@
+NVSHMEM admission case=A2_put_signal_quiet_4K_smoke mode=put_signal payload_bytes=4096 epochs=20 slots=1 credit=0 quiet=1 npes=4 arch=sm_80 nvshmem=1.3
