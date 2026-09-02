@@ -1,0 +1,75 @@
+=== nvidia-smi topology ===
+	[4mGPU0	GPU1	GPU2	GPU3	NIC0	NIC1	NIC2	NIC3	NIC4	NIC5	NIC6	NIC7	NIC8	NIC9	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	NV8	NV8	NV8	NODE	NODE	PXB	PXB	SYS	SYS	SYS	SYS	SYS	NODE	0-31,64-95	0		N/A
+GPU1	NV8	 X 	NV8	NV8	NODE	NODE	PXB	PXB	SYS	SYS	SYS	SYS	SYS	NODE	0-31,64-95	0		N/A
+GPU2	NV8	NV8	 X 	NV8	SYS	SYS	SYS	SYS	PXB	PXB	NODE	NODE	NODE	SYS	32-63,96-127	1		N/A
+GPU3	NV8	NV8	NV8	 X 	SYS	SYS	SYS	SYS	PXB	PXB	NODE	NODE	NODE	SYS	32-63,96-127	1		N/A
+NIC0	NODE	NODE	SYS	SYS	 X 	PIX	NODE	NODE	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC1	NODE	NODE	SYS	SYS	PIX	 X 	NODE	NODE	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC2	PXB	PXB	SYS	SYS	NODE	NODE	 X 	PIX	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC3	PXB	PXB	SYS	SYS	NODE	NODE	PIX	 X 	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC4	SYS	SYS	PXB	PXB	SYS	SYS	SYS	SYS	 X 	PIX	NODE	NODE	NODE	SYS				
+NIC5	SYS	SYS	PXB	PXB	SYS	SYS	SYS	SYS	PIX	 X 	NODE	NODE	NODE	SYS				
+NIC6	SYS	SYS	NODE	NODE	SYS	SYS	SYS	SYS	NODE	NODE	 X 	PIX	NODE	SYS				
+NIC7	SYS	SYS	NODE	NODE	SYS	SYS	SYS	SYS	NODE	NODE	PIX	 X 	NODE	SYS				
+NIC8	SYS	SYS	NODE	NODE	SYS	SYS	SYS	SYS	NODE	NODE	NODE	NODE	 X 	SYS				
+NIC9	NODE	NODE	SYS	SYS	NODE	NODE	NODE	NODE	SYS	SYS	SYS	SYS	SYS	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_100
+  NIC1: mlx5_101
+  NIC2: mlx5_102
+  NIC3: mlx5_103
+  NIC4: mlx5_104
+  NIC5: mlx5_105
+  NIC6: mlx5_106
+  NIC7: mlx5_107
+  NIC8: mlx5_200
+  NIC9: mlx5_bond_0
+
+=== nvidia-smi -q (trimmed) ===
+Failed to parse --display/-d flags
+=== nvcc ===
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Tue_Oct_29_23:50:19_PDT_2024
+Cuda compilation tools, release 12.6, V12.6.85
+Build cuda_12.6.r12.6/compiler.35059454_0
+=== nvshmem install ===
+NVSHMEM_HOME=unset
+ldconfig nvshmem/nccl:
+	libnccl.so.2 (libc6,x86-64) => /usr/lib/x86_64-linux-gnu/libnccl.so.2
+	libnccl.so (libc6,x86-64) => /usr/lib/x86_64-linux-gnu/libnccl.so
+=== binary ldd ===
+	linux-vdso.so.1 (0x00007fffdcd9f000)
+	libnvshmem_host.so.3 => /root/nvshmem-3.6.5-wheel/lib/libnvshmem_host.so.3 (0x00007fe02a600000)
+	libnccl.so.2 => /usr/lib/x86_64-linux-gnu/libnccl.so.2 (0x00007fe01f0f2000)
+	libcublas.so.12 => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.12 (0x00007fe018600000)
+	libmpi.so.40 => /usr/lib/x86_64-linux-gnu/libmpi.so.40 (0x00007fe01efbb000)
+	libstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007fe0183d4000)
+	libgcc_s.so.1 => /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007fe0342ad000)
+	libc.so.6 => /usr/lib/x86_64-linux-gnu/libc.so.6 (0x00007fe0181ab000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fe034ad1000)
+	libpthread.so.0 => /usr/lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fe0342a8000)
+	libdl.so.2 => /usr/lib/x86_64-linux-gnu/libdl.so.2 (0x00007fe01efb6000)
+	librt.so.1 => /usr/lib/x86_64-linux-gnu/librt.so.1 (0x00007fe01efb1000)
+	libm.so.6 => /usr/lib/x86_64-linux-gnu/libm.so.6 (0x00007fe0180c4000)
+	libcublasLt.so.12 => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.12 (0x00007fdff6800000)
+	libopen-rte.so.40 => /usr/lib/x86_64-linux-gnu/libopen-rte.so.40 (0x00007fdff6743000)
+	libopen-pal.so.40 => /usr/lib/x86_64-linux-gnu/libopen-pal.so.40 (0x00007fdff6690000)
+	libhwloc.so.15 => /usr/lib/x86_64-linux-gnu/libhwloc.so.15 (0x00007fe01ef55000)
+	libz.so.1 => /usr/lib/x86_64-linux-gnu/libz.so.1 (0x00007fe0180a8000)
+	libevent_core-2.1.so.7 => /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7 (0x00007fe018073000)
+	libevent_pthreads-2.1.so.7 => /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.7 (0x00007fe01ef4e000)
+	libudev.so.1 => /usr/lib/x86_64-linux-gnu/libudev.so.1 (0x00007fe018049000)

@@ -1,0 +1,2 @@
+run_id,platform_id,device_model,gfx_arch,rank_count,path,family,candidate,M,N,K,q,slice_bytes,warmup,iters,verify_every,window_mult,dush_quiet,abs_tolerance,rel_tolerance,requested_nccl_algo,requested_nccl_proto,requested_nccl_min_channels,requested_nccl_max_channels,status,rank_failure_count
+PHASEB_smoke_r1_C0_DEFAULT_N2048_q8_rep1,RTX4090,"NVIDIA A800-SXM4-80GB",sm_89,4,R1_EVENT_OVERLAP,NCCL,C0_DEFAULT,2048,2048,2048,8,2097152,10,40,1,1,0,0.01,0.0001,DEFAULT,DEFAULT,DEFAULT,DEFAULT,PASS,0

@@ -1,0 +1,40 @@
+NCCL version 2.28.3+cuda13.0
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1129: non-zero status: 27 nvshmem transport init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1325: non-zero status: 7 nvshmem common init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/device/init/init_device.cu:196: non-zero status: 7 nvshmem_internal_init_thread failed 
+
+/root/nvshmem-3.6.5-wheel/include/host/nvshmemx_api.h:64: non-zero status: 7: No such file or directory, exiting... aborting due to error in nvshmemi_init_thread 
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1129: non-zero status: 27 nvshmem transport init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1325: non-zero status: 7 nvshmem common init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/device/init/init_device.cu:196: non-zero status: 7 nvshmem_internal_init_thread failed 
+
+/root/nvshmem-3.6.5-wheel/include/host/nvshmemx_api.h:64: non-zero status: 7: No such file or directory, exiting... aborting due to error in nvshmemi_init_thread 
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1129: non-zero status: 27 nvshmem transport init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1325: non-zero status: 7 nvshmem common init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/device/init/init_device.cu:196: non-zero status: 7 nvshmem_internal_init_thread failed 
+
+/root/nvshmem-3.6.5-wheel/include/host/nvshmemx_api.h:64: non-zero status: 7: No such file or directory, exiting... aborting due to error in nvshmemi_init_thread 
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1129: non-zero status: 27 nvshmem transport init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/host/init/init.cu:1325: non-zero status: 7 nvshmem common init failed 
+
+/dvs/p4/build/sw/rel/gpgpu/toolkit/r12.9/main_nvshmem/src/device/init/init_device.cu:196: non-zero status: 7 nvshmem_internal_init_thread failed 
+
+/root/nvshmem-3.6.5-wheel/include/host/nvshmemx_api.h:64: non-zero status: 7: No such file or directory, exiting... aborting due to error in nvshmemi_init_thread 
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[52656,1],3]
+  Exit code:    255
+--------------------------------------------------------------------------

@@ -1,0 +1,5 @@
+NCCL version 2.28.3+cuda13.0
+NCCL version 2.28.3+cuda13.0
+NCCL version 2.28.3+cuda13.0
+NCCL version 2.28.3+cuda13.0
+RESULT run_id=PHASEB_smoke_rs_C0_DEFAULT_N2048_q8_rep1 path=RS_SLICE_SERIAL family=NCCL candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=2048,K=2048,q=8] status=PASS failures=0

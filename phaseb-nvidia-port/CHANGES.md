@@ -35,3 +35,10 @@
   本机 Makefile 保留 -x cu 与 -Xlinker rpath 修复，v2 的 Makefile 与 v1 相同未含此修复）。
 - v1 已打补丁版本备份为 ag_gemm_phaseb_nv.cpp.v1patched.bak；make clean && make 重编通过，ldd 正常。
 - 未在 v1 上跑过 smoke，按说明直接用 v2 跑，无需重跑。
+
+## 6. A800 迁移构建补丁（2026-09-02 晚，A800 会话）
+- Makefile：`-arch=sm_89` → `-arch=sm_80`（A800/GA100）。仅构建兼容，源码零改动。
+- 环境：NVSHMEM wheel 3.6.5（CMake 前缀 /root/nvshmem-3.6.5-wheel）、NCCL 系统 2.28.3、
+  Open MPI 4.1.2（MPI_HOME=/usr/lib/x86_64-linux-gnu/openmpi）。
+- 契约审查：port 源码无 nvshmem_ptr，d 族全部传本地对称地址（gathered[i]+off、&ready[...]），
+  符合 NVSHMEM API 契约（对照 admission 事故：nvshmem_phaseB 曾因双重翻译挂掉，port 无此问题）。

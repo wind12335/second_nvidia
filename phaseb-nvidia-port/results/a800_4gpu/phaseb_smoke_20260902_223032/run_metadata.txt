@@ -1,0 +1,11 @@
+mode=smoke
+result_root=./results/a800_4gpu/phaseb_smoke_20260902_223032
+started_utc=2026-09-02T14:30:32Z
+host=cs-ec021-cfaa2-server
+binary=/root/second_nvidia/phaseb-nvidia-port/ag_gemm_phaseb_nv
+binary_sha256=6be936da245c5c7b1c7ffeb360afffb02a2092682b546cf8886b9f7cd2fed3fc
+cuda_visible_devices=0,1,2,3
+nvshmem_symmetric_size=1G
+finished_utc=2026-09-02T14:31:44Z
+total_cases=13
+failed_cases=0
