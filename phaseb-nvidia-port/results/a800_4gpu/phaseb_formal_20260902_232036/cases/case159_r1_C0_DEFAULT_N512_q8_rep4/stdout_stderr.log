@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_r1_C0_DEFAULT_N512_q8_rep4 path=R1_EVENT_OVERLAP family=NCCL candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=512,K=2048,q=8] status=PASS failures=0

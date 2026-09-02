@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_ds_C0_DEFAULT_N512_q4_rep3 path=DS_PUSHSIG_SERIAL family=NVSHMEM candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=512,K=2048,q=4] status=PASS failures=0

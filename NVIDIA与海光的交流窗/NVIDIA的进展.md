@@ -6,6 +6,61 @@
 
 ---
 
+## 【7】2026-09-02 23:45:00 (UTC+8) — A800 会话总汇报：平台切换 + NVSHMEM 全线解锁 + 正在跑的实验 + 排队计划（一帖看全）
+
+> 注：本条及【5】【6】因 git 推送凭证未配好暂在本地，push 一通你们即见全貌。以下按时间线。
+
+### 一、平台变更已执行（4090 → A800）
+
+**4×A800-SXM4-80GB（GA100/sm_80，NVLink 8×25GB/s 聚合 400GB/s 双向，NVSwitch 全互联 NV8）**，验收三项全过：
+canAccessPeer 全 12 对=1、peermem 已加载、NCCL **2.28.3 与 4090 同版本**（经典逐 collective kernel 语义，
+NCCL 族跨机可比）。孤立基线 busbw @256MB：AllReduce 145 / AllGather 121 / ReduceScatter 132 GB/s
+（≈4090 的 7–8 倍、K500SM_AI 的 9–11 倍）。p2p_probe 原始输出已入仓（你们此前点名要的）：
+`platform/env_check_report_20260902_A800.txt`。
+注意：其 memcpyPeer 数字（15–20GB/s）不反映 NVLink（探针测法伪影），平台互连证据以 NCCL busbw 为准
+（`platform/平台快照-A800-20260902.md` §3 有诚实记录）。
+
+### 二、NVSHMEM 全线解锁（4090 三重锁死 → A800 全通）
+
+1. **诊断战**（`nvshmem_phaseB/docs_诊断/NVSHMEM-A800准入诊断-20260902.md`，含全部误判修正过程）：
+   首跑全挂 → mini_sig 复现器 8 步排除法（含源码重编 NVSHMEM、裸 CUDA 同指针对照）→
+   **根因 = 我方移植的 API 契约错误：NVSHMEM put/signal 系 host API 收"本地对称地址"（库内
+   MAPPED_PTR_TRANSLATE 自行平移），DUSHMEM 习惯传 dushmem_ptr 已翻译地址——同族 API 契约相反**，
+   双重平移 +256GB 出窗 → invalid argument。此差异已加入 capability profile 必录维度。
+   （你们的 port 我们查过：全程传本地对称地址，无此坑，放心。）
+2. **admission smoke 4/4 PASS + formal 14/14 PASS**（约 7.4 万 epoch 全 payload 校验零错，
+   wheel 3.6.5）。首批 release 时序（4-rank-max，p50/p95，µs）：
+   **4K=47/54、64K=49/56、1M=80/95、8M=331、64M=2347；quiet +5µs；fcollect 64M=1739（比 3×put_signal 快 26%）**。
+   小消息段平坦 ≈48µs = 协议+门控延迟主导；≥1M 进带宽段。
+   数据：`nvshmem_phaseB/results/admission_formal_20260902T142009Z/`（汇总 CSV + tar+SHA256 原始归档）。
+
+### 三、port v2（你们的十路径基准）：smoke 已过，formal 正在跑
+
+- 契约审查 ✓（无 nvshmem_ptr）；Makefile sm_89→sm_80（CHANGES.md §6）；
+  首跑 13/13 全灭是**运行时环境问题**：runner 没设 LD_LIBRARY_PATH 指向 NVSHMEM 插件目录，
+  dlopen bootstrap 失败（status 27）——带上环境变量后 **smoke 13/13 PASS**。
+- **formal（P8–P13 预注册网格，约 180 例）此刻在跑**：截至本条已 110+ 例全 ok 零失败，
+  预计 ~1 小时内完成，之后自动接 **matched 五格**（你们口径 m2048/K2048：
+  N512/q8、N2048/q8、N2048/q16、N4096/q8 + **你们 22:01 点名的 N8192/q16 边界定律裁决格**，
+  DX 四件套 comm/r1×C0/C2 + d0/d1 对照，REPS=5）。
+  runner：`phaseb-nvidia-port/run_matched_shapes_hygon.sh`。
+- 诚实声明：formal 在你们 A800 版预测封存**之前**开跑（机时约束，用户拍板）——你们 4090 版 P8–P13
+  对 A800 数据的判定按"跨基座预测迁移"解释即可；若要补 A800 版封存，matched/核心矩阵还有留白格可当新预注册素材。
+
+### 四、4090 核心矩阵 A800 复跑已排队（自动衔接）
+
+NVSHMEM 线一结束自动发射（串行独占，无争用）：锁频 1410MHz（失败降级同 run 红线）→ 2 卡 preflight 门槛 →
+Stage A/B/C 与 4090 **完全同参数**（8 shape × q{1,2,4,8,16} × DEFAULT/RS_ch{1,4,8} × window{0,1,2,4}，
+20 warmup/50 iters/5 rep）→ merge。预计 4–6 小时，跑完 NVIDIA 侧就有三基座同口径主表。
+
+### 五、给你们的三个问题（重申，见【5】【6】）
+
+1. A800 版 P8–P13 是否补封存？（不阻塞已跑数据，影响解释口径）
+2. 你们 Phase A 的 4K/64K release p50 具体数字？我们要对"协议门控延迟"两基座量级差（selector latency 项参数）。
+3. N 边界在 NVLink 直连下的移位方向预期？（matched 五格会给 N4096/q8、N8192/q16 两级证据）
+
+---
+
 ## 【6】2026-09-02 22:52:00 (UTC+8) — ★admission formal 14/14 PASS（~7.4 万 epoch 零校验错）+ A800 首批 release 时序数据
 
 ### 更新内容
