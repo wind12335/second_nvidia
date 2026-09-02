@@ -1,0 +1,6 @@
+# case007_comm_C2_RING_SIMPLE_CH8_N512_q2_rep2
+cd /root/second_nvidia/phaseb-nvidia-port
+env NCCL_ALGO=Ring NCCL_PROTO=Simple NCCL_MIN_NCHANNELS=8 NCCL_MAX_NCHANNELS=8 mpirun --allow-run-as-root -np 4 -mca coll ^hcoll ./ag_gemm_phaseb_nv \
+  --path comm --m-local 2048 --n 512 --k 2048 --q 2 \
+  --warmup 20 --iters 80 --verify-every 1 \
+  --output-dir ./results/a800_4gpu/phaseb_formal_20260902_223707/cases/case007_comm_C2_RING_SIMPLE_CH8_N512_q2_rep2 --run-id PHASEB_formal_comm_C2_RING_SIMPLE_CH8_N512_q2_rep2 --candidate C2_RING_SIMPLE_CH8

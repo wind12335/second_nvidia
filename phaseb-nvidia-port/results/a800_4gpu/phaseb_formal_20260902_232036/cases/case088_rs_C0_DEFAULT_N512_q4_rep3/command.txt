@@ -1,0 +1,6 @@
+# case088_rs_C0_DEFAULT_N512_q4_rep3
+cd /root/second_nvidia/phaseb-nvidia-port
+env -u NCCL_ALGO -u NCCL_PROTO -u NCCL_MIN_NCHANNELS -u NCCL_MAX_NCHANNELS mpirun --allow-run-as-root -np 4 -mca coll ^hcoll ./ag_gemm_phaseb_nv \
+  --path rs --m-local 2048 --n 512 --k 2048 --q 4 \
+  --warmup 20 --iters 80 --verify-every 1 \
+  --output-dir ./results/a800_4gpu/phaseb_formal_20260902_232036/cases/case088_rs_C0_DEFAULT_N512_q4_rep3 --run-id PHASEB_formal_rs_C0_DEFAULT_N512_q4_rep3 --candidate C0_DEFAULT
