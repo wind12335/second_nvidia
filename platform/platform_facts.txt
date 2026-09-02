@@ -1,0 +1,47 @@
+2026-09-02T08:42:19Z
+cs-25097-447d4-server
+Linux cs-25097-447d4-server 5.15.0-177-generic #187-Ubuntu SMP Sat Apr 11 22:54:33 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+GPU 0: NVIDIA GeForce RTX 4090 (UUID: GPU-0c069391-ba9e-c8cc-1a74-45c08d81fb26)
+GPU 1: NVIDIA GeForce RTX 4090 (UUID: GPU-2beb649a-9617-a801-2d98-3a2b1571a9d7)
+GPU 2: NVIDIA GeForce RTX 4090 (UUID: GPU-6103d443-ea04-23ad-f7fc-2eeec0e0b323)
+GPU 3: NVIDIA GeForce RTX 4090 (UUID: GPU-774338fd-13bd-7e26-b1b2-a0fa1241e9e3)
+0, NVIDIA GeForce RTX 4090, GPU-0c069391-ba9e-c8cc-1a74-45c08d81fb26, 00000000:26:00.0, 580.65.06, 8.9, 24564 MiB, P8, 24
+1, NVIDIA GeForce RTX 4090, GPU-2beb649a-9617-a801-2d98-3a2b1571a9d7, 00000000:61:00.0, 580.65.06, 8.9, 24564 MiB, P8, 25
+2, NVIDIA GeForce RTX 4090, GPU-6103d443-ea04-23ad-f7fc-2eeec0e0b323, 00000000:81:00.0, 580.65.06, 8.9, 24564 MiB, P8, 25
+3, NVIDIA GeForce RTX 4090, GPU-774338fd-13bd-7e26-b1b2-a0fa1241e9e3, 00000000:A1:00.0, 580.65.06, 8.9, 24564 MiB, P8, 25
+	[4mGPU0	GPU1	GPU2	GPU3	NIC0	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	SYS	SYS	SYS	SYS	16-23,80-87	2		N/A
+GPU1	SYS	 X 	SYS	SYS	SYS	0-7,64-71	0		N/A
+GPU2	SYS	SYS	 X 	SYS	SYS	56-63,120-127	7		N/A
+GPU3	SYS	SYS	SYS	 X 	SYS	48-55,112-119	6		N/A
+NIC0	SYS	SYS	SYS	SYS	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_bond_0
+
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Tue_Oct_29_23:50:19_PDT_2024
+Cuda compilation tools, release 12.6, V12.6.85
+Build cuda_12.6.r12.6/compiler.35059454_0
+mpirun (Open MPI) 4.1.2
+
+Report bugs to http://www.open-mpi.org/community/help/
+	libnccl.so.2 (libc6,x86-64) => /lib/x86_64-linux-gnu/libnccl.so.2
+	libnccl.so (libc6,x86-64) => /lib/x86_64-linux-gnu/libnccl.so
+	libcublasLt.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.12
+	libcublasLt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so
+	libcublas.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.12
+	libcublas.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so
+PATH=/root/miniconda3/bin:/root/miniconda3/condabin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.zcode/server/tools/bfs:/root/.zcode/server/tools/ripgrep:/root/.zcode/server/tools/ugrep

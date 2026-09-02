@@ -1,0 +1,113 @@
+=== env_check 2026-09-02T11:56:43Z host=cs-25097-447d4-server user=root ===
+=== os / kernel ===
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+Linux cs-25097-447d4-server 5.15.0-177-generic #187-Ubuntu SMP Sat Apr 11 22:54:33 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+=== gpu 列表 ===
+Wed Sep  2 19:56:43 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.65.06              Driver Version: 580.65.06      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4090        Off |   00000000:26:00.0 Off |                  Off |
+|  0%   31C    P2             61W /  450W |    1687MiB /  24564MiB |     17%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA GeForce RTX 4090        Off |   00000000:61:00.0 Off |                  Off |
+|  0%   31C    P2             65W /  450W |    1687MiB /  24564MiB |     19%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA GeForce RTX 4090        Off |   00000000:81:00.0 Off |                  Off |
+| 30%   33C    P2             80W /  450W |    1687MiB /  24564MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA GeForce RTX 4090        Off |   00000000:A1:00.0 Off |                  Off |
+|  0%   31C    P2             73W /  450W |    1687MiB /  24564MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+
+=== 拓扑（P2P 判定的第一证据）===
+	[4mGPU0	GPU1	GPU2	GPU3	NIC0	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	SYS	SYS	SYS	SYS	16-23,80-87	2		N/A
+GPU1	SYS	 X 	SYS	SYS	SYS	0-7,64-71	0		N/A
+GPU2	SYS	SYS	 X 	SYS	SYS	56-63,120-127	7		N/A
+GPU3	SYS	SYS	SYS	 X 	SYS	48-55,112-119	6		N/A
+NIC0	SYS	SYS	SYS	SYS	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_bond_0
+
+
+=== 驱动 ===
+NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  580.65.06  Release Build  (dvs-builder@U22-I3-AF03-09-1)  Sun Jul 27 06:54:38 UTC 2025
+GCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 
+
+=== nvcc / CUDA ===
+/usr/local/cuda/bin/nvcc
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Tue_Oct_29_23:50:19_PDT_2024
+Cuda compilation tools, release 12.6, V12.6.85
+Build cuda_12.6.r12.6/compiler.35059454_0
+/usr/local/cuda
+/usr/local/cuda-12
+/usr/local/cuda-12.6
+
+=== 库探测 (nccl / nvshmem / cublas) ===
+	libnccl.so.2 (libc6,x86-64) => /lib/x86_64-linux-gnu/libnccl.so.2
+	libnccl.so (libc6,x86-64) => /lib/x86_64-linux-gnu/libnccl.so
+	libcublasLt.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.12
+	libcublasLt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so
+	libcublas.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.12
+	libcublas.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so
+/usr/include/nccl.h
+NVSHMEM_HOME=<unset>
+NCCL_HOME=<unset>
+
+=== 头文件版本号 ===
+-- /usr/include/nccl.h
+#define NCCL_MAJOR 2
+#define NCCL_MINOR 28
+#define NCCL_PATCH 3
+
+=== MPI ===
+/usr/bin/mpirun
+mpirun (Open MPI) 4.1.2
+
+Report bugs to http://www.open-mpi.org/community/help/
+/usr/bin/mpicc
+
+=== gcc / 磁盘 / 内存 ===
+gcc (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0
+overlay          30G  2.4G   27G   9% /
+               total        used        free      shared  buff/cache   available
+Mem:            1007          49         559           2         398         950
+
+=== p2p_probe 编译+运行 ===
+cc1plus: fatal error: p2p_probe.cu: No such file or directory
+compilation terminated.
+p2p_probe COMPILE FAILED（把错误发回来）

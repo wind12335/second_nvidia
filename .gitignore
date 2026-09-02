@@ -1,0 +1,18 @@
+build/
+__pycache__/
+*.o
+*.bak
+.ipynb_checkpoints/
+*.nsys-rep
+*.nsys
+*.qdrep
+# 原始大体积产物：逐迭代 CSV 与日志走时间戳 tar 包归档，不进 git
+results/**/raw_rank*.csv
+results/**/raw_global_samples.csv
+results/**/nccl.*
+results/**/stdout.log
+results/**/stderr.log
+results/**/*.tar.gz
+# 对话存档/迁移包属内部材料，不入库
+*对话存档*
+*.tar.gz
