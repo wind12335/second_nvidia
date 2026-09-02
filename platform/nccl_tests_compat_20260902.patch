@@ -1,0 +1,7 @@
+# nccl-tests 2026 快照 → NCCL 2.28.3 兼容补丁（A800 会话 2026-09-02）
+# 现象：undefined symbol: ncclCommQueryProperties（2.29+ API）
+# 修法：all_reduce.cu / alltoall.cu 头部加 `#pragma weak ncclCommQueryProperties`，
+#       调用处加空指针守卫（deviceImpl>0 才真正需要该 API，默认 0 不受影响）
+# 复验：make clean && make -j8 NCCL_HOME=/usr MPI=1 MPI_HOME=/usr/lib/x86_64-linux-gnu/openmpi
+#       ldd build/all_reduce_perf | grep mpi   # 必须看到 libmpi.so.40
+#       mpirun -np 4 all_reduce 64MB → busbw ~129 GB/s（NVLink 量级）

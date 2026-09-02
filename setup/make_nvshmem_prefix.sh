@@ -3,7 +3,7 @@
 # 用法：bash setup/make_nvshmem_prefix.sh [目标前缀目录，默认 <本仓库>/../nvshmem-3.6.5-wheel]
 set -e
 PREFIX=${1:-$(dirname "$0")/../../nvshmem-3.6.5-wheel}
-WHEEL=$(python3 -c 'import nvidia.nvshmem as m, os; print(os.path.dirname(m.__file__))')
+WHEEL=$(python3 -c 'import nvidia.nvshmem as m; print(m.__path__[0] if m.__file__ is None else __import__("os").path.dirname(m.__file__))')
 mkdir -p "$PREFIX/lib/cmake/nvshmem"
 ln -sfn "$WHEEL/include" "$PREFIX/include"
 for f in libnvshmem_host.so libnvshmem_host.so.3 libnvshmem_device.a \

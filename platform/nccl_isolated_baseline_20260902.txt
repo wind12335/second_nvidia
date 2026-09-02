@@ -1,0 +1,15 @@
+  1048576 B  out-of-place busbw   37.01 GB/s
+  4194304 B  out-of-place busbw   51.42 GB/s
+ 16777216 B  out-of-place busbw  103.98 GB/s
+ 67108864 B  out-of-place busbw  129.30 GB/s
+268435456 B  out-of-place busbw  144.98 GB/s
+  1048576 B  out-of-place busbw   24.14 GB/s
+  4194304 B  out-of-place busbw   38.19 GB/s
+ 16777216 B  out-of-place busbw   79.72 GB/s
+ 67108864 B  out-of-place busbw  109.12 GB/s
+268435456 B  out-of-place busbw  120.61 GB/s
+  1048576 B  out-of-place busbw   27.40 GB/s
+  4194304 B  out-of-place busbw   41.54 GB/s
+ 16777216 B  out-of-place busbw   88.82 GB/s
+ 67108864 B  out-of-place busbw  120.05 GB/s
+268435456 B  out-of-place busbw  132.40 GB/s
