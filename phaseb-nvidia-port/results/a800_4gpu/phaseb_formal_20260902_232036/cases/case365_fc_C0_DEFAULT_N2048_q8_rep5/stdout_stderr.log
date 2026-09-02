@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_fc_C0_DEFAULT_N2048_q8_rep5 path=FC_FCOLLECT_ONLY family=NVSHMEM candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=2048,K=2048,q=8] status=PASS failures=0

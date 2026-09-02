@@ -1,0 +1,1 @@
+RESULT run_id=PHASEB_formal_gemm_C0_DEFAULT_N2048_q4_rep5 path=GEMM_ONLY family=NCCL candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=2048,K=2048,q=4] status=PASS failures=0
