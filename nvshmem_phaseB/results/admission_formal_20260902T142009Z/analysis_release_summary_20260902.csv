@@ -1,0 +1,15 @@
+case_id,epochs,release_p50_us_4rankmax,release_p95_us_4rankmax,commdone_p50_us_4rankmax
+A2_put_signal_1M,5000,79.8,95.4,69.0
+A2_put_signal_4K,10000,47.2,54.0,36.0
+A2_put_signal_64K,10000,48.8,55.8,37.1
+A2_put_signal_64M,100,2347.1,2379.4,2335.2
+A2_put_signal_8M,1000,331.4,344.0,320.2
+A2_put_signal_quiet_1M,5000,85.2,101.2,74.4
+A2_put_signal_quiet_4K,10000,52.2,58.8,41.1
+A2_put_signal_quiet_64M,100,2351.9,2397.0,2340.1
+A3_credit_slot1_4K,10000,47.0,55.3,36.0
+A3_credit_slot2_64K,10000,48.8,56.8,37.2
+A3_credit_slot4_1M,2000,83.2,98.4,71.8
+A4_fcollect_1M,2000,83.4,100.1,80.0
+A4_fcollect_4K,10000,30.4,31.5,26.9
+A4_fcollect_64M,100,1738.5,1753.2,1735.1
