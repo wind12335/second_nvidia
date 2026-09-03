@@ -1,0 +1,3 @@
+status=PASS_BUT_INCOMPLETE(runner的mpirun吞stdin问题,仅1例; 完整版见141941Z)
+note_utc=2026-09-03T05:16:05Z
+保留原因=失败诊断/竞态记录原样保留(数据纪律),不参与任何分析
