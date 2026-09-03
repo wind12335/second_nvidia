@@ -1,0 +1,1 @@
+scope,run_id,timestamp_utc,host,gpu_model,device,rank,rank_count,dtype,M,N,K,collective,q,slice_bytes,backend,strategy,transport_hint,warmup,iteration_index,status,correctness,max_abs_error,max_rel_error,t_release_first_us,t_release_last_us,t_done_us,gemm_first_start_us,gemm_last_end_us,e2e_us,log_path,window

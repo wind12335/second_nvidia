@@ -1,0 +1,66 @@
+2026-09-03T01:44:27Z
+cs-ec021-cfaa2-server
+Linux cs-ec021-cfaa2-server 5.15.0-94-generic #104-Ubuntu SMP Tue Jan 9 15:25:40 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+GPU 0: NVIDIA A800-SXM4-80GB (UUID: GPU-70be9e14-52c4-2387-6e4b-412cce29e69b)
+GPU 1: NVIDIA A800-SXM4-80GB (UUID: GPU-5720a839-f7a5-82be-ea2c-1a1a7be37138)
+GPU 2: NVIDIA A800-SXM4-80GB (UUID: GPU-83b17379-59a1-65cc-3c1d-9bfc9cd074f7)
+GPU 3: NVIDIA A800-SXM4-80GB (UUID: GPU-373bd960-b876-6e35-dfd7-ab45741c18f7)
+0, NVIDIA A800-SXM4-80GB, GPU-70be9e14-52c4-2387-6e4b-412cce29e69b, 00000000:8A:00.0, 580.65.06, 8.0, 81920 MiB, P0, 36
+1, NVIDIA A800-SXM4-80GB, GPU-5720a839-f7a5-82be-ea2c-1a1a7be37138, 00000000:8F:00.0, 580.65.06, 8.0, 81920 MiB, P0, 35
+2, NVIDIA A800-SXM4-80GB, GPU-83b17379-59a1-65cc-3c1d-9bfc9cd074f7, 00000000:C6:00.0, 580.65.06, 8.0, 81920 MiB, P0, 34
+3, NVIDIA A800-SXM4-80GB, GPU-373bd960-b876-6e35-dfd7-ab45741c18f7, 00000000:CA:00.0, 580.65.06, 8.0, 81920 MiB, P0, 38
+	[4mGPU0	GPU1	GPU2	GPU3	NIC0	NIC1	NIC2	NIC3	NIC4	NIC5	NIC6	NIC7	NIC8	NIC9	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	NV8	NV8	NV8	SYS	SYS	SYS	SYS	PXB	PXB	NODE	NODE	NODE	SYS	32-63,96-127	1		N/A
+GPU1	NV8	 X 	NV8	NV8	SYS	SYS	SYS	SYS	PXB	PXB	NODE	NODE	NODE	SYS	32-63,96-127	1		N/A
+GPU2	NV8	NV8	 X 	NV8	SYS	SYS	SYS	SYS	NODE	NODE	PXB	PXB	PXB	SYS	32-63,96-127	1		N/A
+GPU3	NV8	NV8	NV8	 X 	SYS	SYS	SYS	SYS	NODE	NODE	PXB	PXB	PXB	SYS	32-63,96-127	1		N/A
+NIC0	SYS	SYS	SYS	SYS	 X 	PIX	NODE	NODE	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC1	SYS	SYS	SYS	SYS	PIX	 X 	NODE	NODE	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC2	SYS	SYS	SYS	SYS	NODE	NODE	 X 	PIX	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC3	SYS	SYS	SYS	SYS	NODE	NODE	PIX	 X 	SYS	SYS	SYS	SYS	SYS	NODE				
+NIC4	PXB	PXB	NODE	NODE	SYS	SYS	SYS	SYS	 X 	PIX	NODE	NODE	NODE	SYS				
+NIC5	PXB	PXB	NODE	NODE	SYS	SYS	SYS	SYS	PIX	 X 	NODE	NODE	NODE	SYS				
+NIC6	NODE	NODE	PXB	PXB	SYS	SYS	SYS	SYS	NODE	NODE	 X 	PXB	PXB	SYS				
+NIC7	NODE	NODE	PXB	PXB	SYS	SYS	SYS	SYS	NODE	NODE	PXB	 X 	PIX	SYS				
+NIC8	NODE	NODE	PXB	PXB	SYS	SYS	SYS	SYS	NODE	NODE	PXB	PIX	 X 	SYS				
+NIC9	SYS	SYS	SYS	SYS	NODE	NODE	NODE	NODE	SYS	SYS	SYS	SYS	SYS	 X 				
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+
+NIC Legend:
+
+  NIC0: mlx5_100
+  NIC1: mlx5_101
+  NIC2: mlx5_102
+  NIC3: mlx5_103
+  NIC4: mlx5_104
+  NIC5: mlx5_105
+  NIC6: mlx5_106
+  NIC7: mlx5_107
+  NIC8: mlx5_200
+  NIC9: mlx5_bond_0
+
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Tue_Oct_29_23:50:19_PDT_2024
+Cuda compilation tools, release 12.6, V12.6.85
+Build cuda_12.6.r12.6/compiler.35059454_0
+mpirun (Open MPI) 4.1.2
+
+Report bugs to http://www.open-mpi.org/community/help/
+	libnccl.so.2 (libc6,x86-64) => /usr/lib/x86_64-linux-gnu/libnccl.so.2
+	libnccl.so (libc6,x86-64) => /usr/lib/x86_64-linux-gnu/libnccl.so
+	libcublasLt.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so.12
+	libcublasLt.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublasLt.so
+	libcublas.so.12 (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so.12
+	libcublas.so (libc6,x86-64) => /usr/local/cuda/targets/x86_64-linux/lib/libcublas.so
+LD_LIBRARY_PATH=/root/miniconda3/lib/python3.10/site-packages/nvidia/nvshmem/lib:
+PATH=/root/miniconda3/bin:/root/miniconda3/condabin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.zcode/server/tools/bfs:/root/.zcode/server/tools/ripgrep:/root/.zcode/server/tools/ugrep

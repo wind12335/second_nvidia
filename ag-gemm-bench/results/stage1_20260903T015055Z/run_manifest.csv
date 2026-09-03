@@ -1,0 +1,4 @@
+run_id,stage,candidate,shape_id,category,local_rows,K,N,q,window,repetition,exit_code,case_dir,timestamp_utc
+stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep1,A,DEFAULT,S1,comm_heavy,4096,512,512,1,0,1,0,/root/second_nvidia/ag-gemm-bench/results/stage1_20260903T015055Z/stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep1,2026-09-03T01:51:08Z
+stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep2,A,DEFAULT,S1,comm_heavy,4096,512,512,1,0,2,0,/root/second_nvidia/ag-gemm-bench/results/stage1_20260903T015055Z/stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep2,2026-09-03T01:51:20Z
+stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep3,A,DEFAULT,S1,comm_heavy,4096,512,512,1,0,3,0,/root/second_nvidia/ag-gemm-bench/results/stage1_20260903T015055Z/stage1_A_DEFAULT_S1_m4096k512n512_q1w0_rep3,2026-09-03T01:51:31Z

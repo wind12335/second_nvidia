@@ -384,7 +384,12 @@ class Benchmark {
 
     if (strategy == Strategy::kFullSerial) {
       NCCL_CHECK(ncclAllGather(buffers_.local_a, buffers_.gathered, local_a_elements_, ncclFloat, comm_, comm_stream_));
-      CUDA_CHECK(cudaEventRecord(events.release[0], comm_stream_));
+      // 2026-09-03 A800 修复: B0 原先只 record release[0], 采样端却对全部 q 个事件调
+      // cudaEventElapsedTime → 未 record 事件在 A800 驱动上返回 invalid resource handle
+      // (4090 驱动宽容, 同代码跨机分裂)。串行语义下所有 slice 同时可消费, 全部 record 同一时刻。
+      for (int i = 0; i < config_.q; ++i) {
+        CUDA_CHECK(cudaEventRecord(events.release[i], comm_stream_));
+      }
       CUDA_CHECK(cudaEventRecord(events.comm_done, comm_stream_));
       CUDA_CHECK(cudaStreamWaitEvent(compute_stream_, events.release[0], 0));
       CUDA_CHECK(cudaEventRecord(events.gemm_first, compute_stream_));

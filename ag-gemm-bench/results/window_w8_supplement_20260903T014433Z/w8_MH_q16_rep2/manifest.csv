@@ -1,0 +1,1 @@
+run_id,timestamp_utc,status,rank_count,local_rows,M,N,K,q,warmup,iterations,backend,gpu_model,transport_hint,raw_rank_csv,raw_global_csv,summary_csv,rank_log_pattern,window

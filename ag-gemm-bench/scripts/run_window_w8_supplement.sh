@@ -14,9 +14,10 @@ outdir=results/window_w8_supplement_$(date -u +%Y%m%dT%H%M%SZ)
 mkdir -p "$outdir"
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 rc_total=0; n=0
+# 2026-09-03 修复: bench 约束 window < q, 故 w=8 只在 q=16 格合法（q4/q8 的 24 run 原设计必败）
 for entry in "S1|4096|512|512" "S4|512|4096|4096" "S5|4096|4096|1024" "MH|2048|2048|2048"; do
   IFS='|' read -r sid ml kk nn <<< "$entry"
-  for q in 4 8 16; do
+  for q in 16; do
     for rep in 1 2 3; do
       run_id="w8_${sid}_q${q}_rep${rep}"
       mkdir -p "$outdir/$run_id"
