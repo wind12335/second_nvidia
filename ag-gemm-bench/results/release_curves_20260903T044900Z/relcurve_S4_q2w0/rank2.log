@@ -1,0 +1,9 @@
+run_id=relcurve_S4_q2w0
+timestamp_utc=2026-09-03T04:49:44Z
+rank=2/4
+local_rank=2
+cuda_device=2
+gpu_model=NVIDIA A800-SXM4-80GB
+dimensions=M=2048,N=4096,K=4096
+q=2
+window=0

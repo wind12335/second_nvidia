@@ -1,0 +1,1 @@
+stage=A candidate=DEFAULT env=[] shape=S6 local_rows=1024 K=4096 N=4096 q=4 window=0 rep=5

@@ -1,0 +1,41 @@
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO cudaDriverVersion 13000
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO NCCL version 2.28.3+cuda13.0
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO NET/Plugin: Could not find: libnccl-net.so
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO NET/IB : Using [0]mlx5_100:1/IB [1]mlx5_101:1/IB [2]mlx5_102:1/IB [3]mlx5_103:1/IB [4]mlx5_104:1/IB [5]mlx5_105:1/IB [6]mlx5_106:1/IB [7]mlx5_107:1/IB [8]mlx5_200:1/IB [9]mlx5_bond_0:1/RoCE [RO]; OOB eth0:10.233.123.102<0>
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Initialized NET plugin IB
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Assigned NET plugin IB to comm
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Using network IB
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO DMA-BUF is available on GPU device 1
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO ncclCommInitRank comm 0x5574b444a8d0 rank 1 nranks 4 cudaDev 1 nvmlDev 1 busId 8f000 commId 0xfd3c279328f909ba - Init START
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO RAS client listening socket at ::1<28028>
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 1 is 32-63,96-127. (GPU affinity = 32-63,96-127 ; CPU affinity = 0-127).
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO NVLS multicast support is not available on dev 1 (NVLS_NCHANNELS 0)
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO comm 0x5574b444a8d0 rank 1 nRanks 4 nNodes 1 localRanks 4 localRank 1 MNNVL 0
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 2/-1/-1->1->0 [2] 2/-1/-1->1->0 [3] 2/-1/-1->1->0 [4] 2/-1/-1->1->0 [5] 2/-1/-1->1->0 [6] 2/-1/-1->1->0 [7] 2/-1/-1->1->0 [8] 2/-1/-1->1->0 [9] 2/-1/-1->1->0 [10] 2/-1/-1->1->0 [11] 2/-1/-1->1->0 [12] 2/-1/-1->1->0 [13] 2/-1/-1->1->0 [14] 2/-1/-1->1->0 [15] 2/-1/-1->1->0
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO P2P Chunksize set to 524288
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+cs-ec021-cfaa2-server:25419:25485 [0] NCCL INFO [Proxy Service] Device 1 CPU core 38
+cs-ec021-cfaa2-server:25419:25489 [0] NCCL INFO [Proxy Service UDS] Device 1 CPU core 106
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO 16 coll channels, 16 collnet channels, 0 nvls channels, 16 p2p channels, 16 p2p channels per peer
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO ncclCommInitRank comm 0x5574b444a8d0 rank 1 nranks 4 cudaDev 1 nvmlDev 1 busId 8f000 commId 0xfd3c279328f909ba - Init COMPLETE
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Init timings - ncclCommInitRank: rank 1 nranks 4 total 0.40 (kernels 0.14, alloc 0.21, bootstrap 0.00, allgathers 0.01, topo 0.03, graphs 0.00, connections 0.01, rest 0.00)
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 00/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 01/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 02/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 03/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 04/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 05/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 06/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 07/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 08/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 09/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 10/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 11/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 12/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 13/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 14/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Channel 15/0 : 1[1] -> 2[2] via P2P/CUMEM/read
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+cs-ec021-cfaa2-server:25419:25419 [1] NCCL INFO comm 0x5574b444a8d0 rank 1 nranks 4 cudaDev 1 busId 8f000 - Destroy COMPLETE

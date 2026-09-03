@@ -1,0 +1,1 @@
+stage=B candidate=RS_ch1 env=[NCCL_ALGO=Ring NCCL_PROTO=Simple NCCL_NCHANNELS=1] shape=S4 local_rows=512 K=4096 N=4096 q=4 window=0 rep=1

@@ -1,0 +1,9 @@
+run_id=stage1_A_DEFAULT_S8_m2048k4096n8192_q2w0_rep2
+timestamp_utc=2026-09-03T03:09:31Z
+rank=0/4
+local_rank=0
+cuda_device=0
+gpu_model=NVIDIA A800-SXM4-80GB
+dimensions=M=8192,N=8192,K=4096
+q=2
+window=0

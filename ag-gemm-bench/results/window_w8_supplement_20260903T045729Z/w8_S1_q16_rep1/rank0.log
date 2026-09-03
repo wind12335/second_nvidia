@@ -1,0 +1,9 @@
+run_id=w8_S1_q16_rep1
+timestamp_utc=2026-09-03T04:57:32Z
+rank=0/4
+local_rank=0
+cuda_device=0
+gpu_model=NVIDIA A800-SXM4-80GB
+dimensions=M=16384,N=512,K=512
+q=16
+window=8

@@ -1,0 +1,2 @@
+run_id,timestamp_utc,status,rank_count,local_rows,M,N,K,q,warmup,iterations,backend,gpu_model,transport_hint,raw_rank_csv,raw_global_csv,summary_csv,rank_log_pattern,window
+stage1_C_DEFAULT_S1_m4096k512n512_q4w1_rep3,2026-09-03T04:30:22Z,PASS,4,4096,16384,512,512,4,20,50,NCCL,NVIDIA A800-SXM4-80GB,DEFAULT,raw_rank{rank}.csv,raw_global_samples.csv,summary.csv,rank{rank}.log,1

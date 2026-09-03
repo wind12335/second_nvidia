@@ -1,0 +1,1 @@
+run_id=stage1_A_DEFAULT_S4_m512k4096n4096_q16w0_rep4 status=PASS output_dir=/root/second_nvidia/ag-gemm-bench/results/stage1_20260903T015055Z/stage1_A_DEFAULT_S4_m512k4096n4096_q16w0_rep4
