@@ -1,273 +1,273 @@
 {
+  "schema_version": "nsys.anchor-extraction.v2",
   "01_d0_N2048_q8": {
     "kind": "d0",
+    "device": 0,
     "counts": {
-      "gemm": 64,
-      "nccl": 96,
-      "barrier_like": 136,
-      "total_kernels": 348
+      "gemm": 16,
+      "nccl": 24,
+      "barrier_like": 34,
+      "total_kernels": 87
     },
     "gemm_names": [
       "ampere_sgemm_128x64_nn"
     ],
-    "H3_d0_gap_ncclend_to_gemmstart": {
-      "n": 96,
-      "p50_us": 13.68,
-      "p10_us": 4.55,
-      "p90_us": 37661.76,
-      "min_us": 1.34,
-      "max_us": 51343.48
-    },
-    "H7_gemm_durations_us": {
-      "n": 64,
-      "p50_us": 3609.69,
-      "p10_us": 3608.64,
-      "p90_us": 3635.84,
-      "min_us": 3608.42,
-      "max_us": 3637.54
+    "H3_d0_gap_ncclend_to_gemmstart_steady": {
+      "n": 15,
+      "p50_us": 14.18,
+      "p10_us": 13.15,
+      "p90_us": 15.17,
+      "min_us": 13.15,
+      "max_us": 15.23
     }
   },
   "02_r1_N2048_q8": {
     "kind": "r1_loser",
+    "device": 0,
     "counts": {
-      "gemm": 484,
-      "nccl": 516,
-      "barrier_like": 136,
-      "total_kernels": 1668
+      "gemm": 121,
+      "nccl": 129,
+      "barrier_like": 34,
+      "total_kernels": 417
     },
     "gemm_names": [
       "ampere_sgemm_128x32_nn",
       "ampere_sgemm_128x64_nn"
     ],
-    "H3_r1_gap_ncclend_to_gemmstart": {
-      "n": 516,
-      "p50_us": 510.9,
-      "p10_us": 15.76,
-      "p90_us": 521.79,
-      "min_us": 9.41,
-      "max_us": 49917.55
+    "H3_r1_gap_ncclend_to_gemmstart_steady": {
+      "n": 128,
+      "p50_us": 514.66,
+      "p10_us": 16.8,
+      "p90_us": 531.93,
+      "min_us": 13.57,
+      "max_us": 921.42
     },
-    "H3_r1_gap_gemmend_to_ncclstart": {
-      "n": 472,
-      "p50_us": 515.32,
-      "p10_us": 492.76,
+    "H3_r1_gap_gemmend_to_ncclstart_steady": {
+      "n": 118,
+      "p50_us": 517.06,
+      "p10_us": 496.06,
       "p90_us": 1774.11,
-      "min_us": 10.14,
-      "max_us": 2496.12
+      "min_us": 29.09,
+      "max_us": 2497.08
     },
     "H4_nccl_durations_us": {
-      "n": 516,
-      "p50_us": 107.55,
-      "p10_us": 90.53,
-      "p90_us": 120.67,
-      "min_us": 83.71,
+      "n": 129,
+      "p50_us": 107.84,
+      "p10_us": 90.72,
+      "p90_us": 120.83,
+      "min_us": 84.51,
       "max_us": 1210.99
     },
     "H4_gemm_durations_us": {
-      "n": 484,
-      "p50_us": 493.26,
-      "p10_us": 474.33,
-      "p90_us": 515.13,
-      "min_us": 473.4,
+      "n": 121,
+      "p50_us": 495.25,
+      "p10_us": 475.38,
+      "p90_us": 519.61,
+      "min_us": 474.94,
       "max_us": 3635.68
     },
-    "H7_overlap_fraction_gemmdur_covered_by_nccl": 0.0344
+    "H7_overlap_pct_of_gemmdur_covered_by_nccl": 10.68
   },
   "03_r1_N512_q8": {
     "kind": "r1_winner",
+    "device": 0,
     "counts": {
-      "gemm": 484,
-      "nccl": 516,
-      "barrier_like": 136,
-      "total_kernels": 1668
+      "gemm": 121,
+      "nccl": 129,
+      "barrier_like": 34,
+      "total_kernels": 417
     },
     "gemm_names": [
       "ampere_sgemm_32x128_nn",
       "ampere_sgemm_64x32_sliced1x4_nn"
     ],
-    "H3_r1_gap_ncclend_to_gemmstart": {
-      "n": 516,
-      "p50_us": 153.4,
-      "p10_us": 11.51,
-      "p90_us": 180.64,
-      "min_us": 0.11,
-      "max_us": 49602.01
+    "H3_r1_gap_ncclend_to_gemmstart_steady": {
+      "n": 128,
+      "p50_us": 159.47,
+      "p10_us": 14.02,
+      "p90_us": 184.7,
+      "min_us": 0.61,
+      "max_us": 872.62
     },
-    "H3_r1_gap_gemmend_to_ncclstart": {
-      "n": 472,
-      "p50_us": 144.29,
-      "p10_us": 130.49,
-      "p90_us": 641.98,
-      "min_us": 6.62,
-      "max_us": 1018.71
+    "H3_r1_gap_gemmend_to_ncclstart_steady": {
+      "n": 118,
+      "p50_us": 148.67,
+      "p10_us": 138.3,
+      "p90_us": 669.17,
+      "min_us": 12.32,
+      "max_us": 1008.37
     },
     "H4_nccl_durations_us": {
-      "n": 516,
-      "p50_us": 99.18,
-      "p10_us": 88.61,
-      "p90_us": 118.02,
+      "n": 129,
+      "p50_us": 98.88,
+      "p10_us": 89.34,
+      "p90_us": 115.97,
       "min_us": 81.5,
       "max_us": 1122.25
     },
     "H4_gemm_durations_us": {
-      "n": 484,
-      "p50_us": 160.97,
-      "p10_us": 135.17,
-      "p90_us": 172.73,
-      "min_us": 134.53,
+      "n": 121,
+      "p50_us": 161.89,
+      "p10_us": 135.61,
+      "p90_us": 173.63,
+      "min_us": 134.81,
       "max_us": 966.42
     },
-    "H7_overlap_fraction_gemmdur_covered_by_nccl": 0.121
+    "H7_overlap_pct_of_gemmdur_covered_by_nccl": 37.52
   },
   "04_d1_N4096_q8": {
     "kind": "d1",
+    "device": 0,
     "counts": {
-      "gemm": 484,
-      "nccl": 36,
-      "barrier_like": 136,
-      "total_kernels": 5412
+      "gemm": 121,
+      "nccl": 9,
+      "barrier_like": 34,
+      "total_kernels": 1353
     },
     "gemm_names": [
       "ampere_sgemm_128x128_nn",
       "ampere_sgemm_64x64_nn"
     ],
-    "H3_d1_gap_barrierend_to_gemmstart": {
-      "n": 84,
-      "p50_us": 97133.52,
-      "p10_us": 92989.38,
-      "p90_us": 336123.74,
-      "min_us": 359.39,
-      "max_us": 415050.03
+    "H3_d1_gap_barrierend_to_gemmstart_steady": {
+      "n": 1,
+      "p50_us": 383.39,
+      "p10_us": 383.39,
+      "p90_us": 383.39,
+      "min_us": 383.39,
+      "max_us": 383.39
     },
     "H4_barrier_durations_us": {
-      "n": 136,
-      "p50_us": 9.92,
-      "p10_us": 7.26,
-      "p90_us": 337.95,
-      "min_us": 2.82,
-      "max_us": 13106.55
+      "n": 34,
+      "p50_us": 10.4,
+      "p10_us": 7.2,
+      "p90_us": 481.21,
+      "min_us": 2.85,
+      "max_us": 8154.84
     },
     "H4_gemm_durations_us": {
-      "n": 484,
-      "p50_us": 939.79,
-      "p10_us": 938.36,
-      "p90_us": 944.59,
-      "min_us": 937.97,
+      "n": 121,
+      "p50_us": 943.92,
+      "p10_us": 942.86,
+      "p90_us": 945.58,
+      "min_us": 942.22,
       "max_us": 7335.72
     }
   },
   "00_w0_S1_q16": {
     "kind": "w0",
+    "device": 0,
     "counts": {
-      "gemm": 1984,
-      "nccl": 1984,
+      "gemm": 496,
+      "nccl": 496,
       "barrier_like": 0,
-      "total_kernels": 5888
+      "total_kernels": 1472
     },
     "gemm_names": [
       "ampere_sgemm_128x32_nn",
       "ampere_sgemm_64x32_sliced1x4_nn"
     ],
     "H5_nccl_durations_us": {
-      "n": 1984,
-      "p50_us": 47.2,
-      "p10_us": 44.19,
-      "p90_us": 65.12,
-      "min_us": 42.37,
+      "n": 496,
+      "p50_us": 46.83,
+      "p10_us": 44.0,
+      "p90_us": 56.58,
+      "min_us": 42.66,
       "max_us": 4784.36
     },
     "H5_gemm_durations_us": {
-      "n": 1984,
-      "p50_us": 55.07,
-      "p10_us": 54.27,
-      "p90_us": 61.57,
-      "min_us": 53.92,
+      "n": 496,
+      "p50_us": 55.38,
+      "p10_us": 54.56,
+      "p90_us": 61.79,
+      "min_us": 54.34,
       "max_us": 586.17
     },
-    "H5_overlap_fraction_gemmdur_covered_by_nccl": 0.1073,
-    "H5_gap_gemmend_to_ncclstart": {
-      "n": 1972,
-      "p50_us": 32.65,
-      "p10_us": 5.61,
-      "p90_us": 353.75,
-      "min_us": 0.0,
-      "max_us": 49096.39
+    "H5_overlap_pct_of_gemmdur_covered_by_nccl": 18.74,
+    "H5_gap_gemmend_to_ncclstart_steady": {
+      "n": 446,
+      "p50_us": 20.38,
+      "p10_us": 16.57,
+      "p90_us": 57.44,
+      "min_us": 0.77,
+      "max_us": 392.7
     }
   },
   "01_w1_S1_q16": {
     "kind": "w1",
+    "device": 0,
     "counts": {
-      "gemm": 1984,
-      "nccl": 1984,
+      "gemm": 496,
+      "nccl": 496,
       "barrier_like": 0,
-      "total_kernels": 5888
+      "total_kernels": 1472
     },
     "gemm_names": [
       "ampere_sgemm_128x32_nn",
       "ampere_sgemm_64x32_sliced1x4_nn"
     ],
     "H5_nccl_durations_us": {
-      "n": 1984,
-      "p50_us": 45.34,
-      "p10_us": 43.87,
-      "p90_us": 55.68,
+      "n": 496,
+      "p50_us": 44.8,
+      "p10_us": 43.62,
+      "p90_us": 53.34,
       "min_us": 42.24,
       "max_us": 7190.05
     },
     "H5_gemm_durations_us": {
-      "n": 1984,
-      "p50_us": 54.53,
-      "p10_us": 54.17,
-      "p90_us": 55.04,
-      "min_us": 53.92,
-      "max_us": 585.69
+      "n": 496,
+      "p50_us": 54.69,
+      "p10_us": 54.53,
+      "p90_us": 55.07,
+      "min_us": 54.34,
+      "max_us": 585.37
     },
-    "H5_overlap_fraction_gemmdur_covered_by_nccl": 0.0323,
-    "H5_gap_gemmend_to_ncclstart": {
-      "n": 1980,
-      "p50_us": 12.6,
-      "p10_us": 4.28,
-      "p90_us": 18.59,
-      "min_us": 0.02,
-      "max_us": 53283.63
+    "H5_overlap_pct_of_gemmdur_covered_by_nccl": 0.0,
+    "H5_gap_gemmend_to_ncclstart_steady": {
+      "n": 466,
+      "p50_us": 18.06,
+      "p10_us": 16.19,
+      "p90_us": 19.23,
+      "min_us": 14.72,
+      "max_us": 1013.17
     }
   },
   "08_w8_S1_q16": {
     "kind": "w8",
+    "device": 0,
     "counts": {
-      "gemm": 1984,
-      "nccl": 1984,
+      "gemm": 496,
+      "nccl": 496,
       "barrier_like": 0,
-      "total_kernels": 5888
+      "total_kernels": 1472
     },
     "gemm_names": [
       "ampere_sgemm_128x32_nn",
       "ampere_sgemm_64x32_sliced1x4_nn"
     ],
     "H5_nccl_durations_us": {
-      "n": 1984,
-      "p50_us": 47.33,
-      "p10_us": 44.19,
-      "p90_us": 65.22,
+      "n": 496,
+      "p50_us": 46.75,
+      "p10_us": 43.81,
+      "p90_us": 55.49,
       "min_us": 42.49,
-      "max_us": 2991.24
+      "max_us": 2633.46
     },
     "H5_gemm_durations_us": {
-      "n": 1984,
-      "p50_us": 54.91,
-      "p10_us": 54.24,
-      "p90_us": 61.57,
-      "min_us": 53.92,
-      "max_us": 585.88
+      "n": 496,
+      "p50_us": 55.28,
+      "p10_us": 54.56,
+      "p90_us": 62.01,
+      "min_us": 54.4,
+      "max_us": 585.75
     },
-    "H5_overlap_fraction_gemmdur_covered_by_nccl": 0.1126,
-    "H5_gap_gemmend_to_ncclstart": {
-      "n": 1972,
-      "p50_us": 23.07,
-      "p10_us": 5.58,
-      "p90_us": 348.52,
-      "min_us": 0.03,
-      "max_us": 53165.04
+    "H5_overlap_pct_of_gemmdur_covered_by_nccl": 18.65,
+    "H5_gap_gemmend_to_ncclstart_steady": {
+      "n": 446,
+      "p50_us": 21.94,
+      "p10_us": 17.25,
+      "p90_us": 57.57,
+      "min_us": 15.46,
+      "max_us": 2722.13
     }
   }
 }
