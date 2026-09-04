@@ -12,18 +12,20 @@
 | 01_d0_N2048_q8_串行称王 | **H3**(d0 档) / H7 | 每卡 16 次整块 sgemm_128x64 + 24 次 NCCL：AG 完成→整块 GEMM 的稳态 gap 即 d0 档 |
 | 02_r1_N2048_q8_重叠输家 | **H4** / H7 | 每卡 121 片 sgemm(495µs) + 129 次 AG LL(p50 108µs/尖刺 1.2ms)；重叠覆盖仅 10.7% |
 | 03_r1_N512_q8_重叠赢家 | **H7**(正例) / H4 对照 | 同构 121+129，片算 162µs；重叠覆盖 37.5%——重叠收益到手的 kernel 级正例 |
-| 04_d1_N4096_q8_gating病理 | **H4** / H2（H2 仅作 API/源码联合 proxy，内审定） | barrier_on_stream 逐 rank 尾巴 0.34–13.11ms（rank 不对称）——消费流等远端的停顿直接可见 |
+| 04_d1_N4096_q8_gating病理 | **H4** / H2（H2 仅作 API/源码联合证据，内审定） | trace 直接可见消费流执行路径上的长驻 barrier kernel（逐 rank 尾 0.34–13.1ms 不对称）；结合 API/源码 contract 与 wait-induced blocking **一致**——不主张 trace 单独证明 legal release 或特定远端 notification |
 | 00_w0/01_w1/08_w8（S1/q16） | **H5**(主) / H2（仅概念旁引，内审定） | 每卡 496×496；GEMM 被并发 NCCL 覆盖 **w0 18.7% / w1 0.0% / w8 18.7%**——害区并发完全归零、w8 回到平台线 |
 
-## 2. JM-H3 梯子：A800 侧两档 provisional-direct、一档维持 derived
+## 2. JM-H3 梯子：A800 侧整体标 proxy / pending re-extraction（内审终判）
 
-**口径（v2）**：device 0（rank 0）内、稳态配对 <5ms 过滤。标记为 provisional-direct（device 内描述统计）；**paper 级数字需 NVTX/iteration-slice 对齐重提后定稿**（内审第 6 条），合稿前完成。
+**口径（v2.1）**：下表为 device 0 内的**描述性审计数**（稳态 <5ms 过滤——注意该阈值系事后设定，属审计清洗而非结构化排除）。**不作为梯子估计**：配对语义未证明（无法确认哪个 AG kernel 对应哪片 GEMM），p10 无预注册 mixture 语义。按内审 B4 规则重提（(globalPid,deviceId) 分层、NVTX/迭代对齐、结构化排除 warmup/验证/轮界、阈值敏感性报告、per-device 范围报告）前，H3 A800 行统一标：
 
-| 档位 | 来源 | A800 实测（device 0） | 判定 |
+> **proxy/pending re-extraction**: kernel timelines show coarse serial and fine-grained pipelined regimes, but the release-to-consume latency ladder is not yet directly identified on A800.
+
+| 档位 | 来源 | device 0 审计数（非梯子值） | 状态 |
 |---|---|---|---|
-| d0 档 | 01_d0（稳态 15 对） | **p50 14.2µs / p10 13.2 / p90 15.2** | provisional-direct；与 K500 d0/r0 16.2µs 同量级——档位序跨基座、参数各异 |
-| r1 档 | 02/03（各 128 稳态对） | 快耦合 **p10 16.8µs（N2048）/ 14.0µs（N512）**，落 K500 10–47µs 带内；p50 514.7/159.5µs 为流水占位（loser p50≈片算 495µs，另作 H4 串行化证据） | provisional-direct（快耦合模式） |
-| d1 档 | 04 | **不可提取**：稳态配对仅 1 对（barrier 后队列尚有 put/signal 才到 GEMM） | **维持 K500 derived 5.4µs**；04 的贡献在 H4/H2 |
+| d0 档 | 01_d0（稳态 15 对；每卡 24 NCCL/16 GEMM，非一一对应） | p50 14.2µs / p10 13.2 / p90 15.2 | proxy，待 NVTX 对齐 |
+| r1 档 | 02/03（各 128 稳态对；p10 与 p50 双峰生成机制未解释，不得同时当梯子值与锁步值用） | 快端 p10 16.8/14.0µs；p50 514.7/159.5µs（另作 H4 串行化证据） | proxy，待 NVTX 对齐 |
+| d1 档 | 04（稳态配对仅 1 对） | 不可提取 | **维持 K500 derived 5.4µs** |
 
 ## 3. JM-H4 逐片税的 A800 直接证据（device 0）
 
@@ -54,7 +56,7 @@ S2→S3 中间段无新直接证据，维持显式 pending；admission 47µs 地
 
 ## 7. 图位认领
 
-F-JM3（梯子+首片推迟）我方出图，**待 NVTX 对齐重提后用 paper 级数字**；F-JM4 谱系图 A800 柱用 P21 终判值；F-JM1/2 海光侧。
+F-JM3（梯子+首片推迟）我方出图，**须等 corrected table（B4 重提取）后用 paper 级数字**；F-JM4 谱系图 A800 柱用 P21 终判值；F-JM1/2 海光侧。**图注纪律**：A800 +16.5（N8192/q16）系早期 matched/formal 证据、非 P19/P21 随机区组 cell，图注须注明；P19/P21 大 N 结果仅支撑"远侧无过零"区域注释。kernel 计数一律写"aggregate across four ranks, one representative sealed trace per cell"，不写独立样本数。
 
 ## 8. H8 行我方勘误（供海光 v2 采纳）
 

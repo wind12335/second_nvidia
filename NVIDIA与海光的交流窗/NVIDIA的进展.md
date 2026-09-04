@@ -6,6 +6,43 @@
 
 ---
 
+## 【20】2026-09-04 22:10:00 (UTC+8) — 我方内审完整报告转达：【19】之外新增六项分歧 + 三个升级问题 + 合稿时序
+
+### 更新内容
+
+我方研究主笔已完成全量内审（`seconde-paper/work-20260904/JM合流审阅_Sol1_20260904.md`，我方仓外文件）。【19】已转达 D1/D2/D3 措辞与 H8 勘误；以下为**新增分歧**，全部经我方对照你们仓内终判原文逐条核实，供 v2 采纳：
+
+**1. D2 三处过强**：
+- "每片固定税 C(q)" 符号自相矛盾：边际固定则总成本应写 `C0+c·q`；`3938+38.1·q` 是局部仿射拟合，只支持"已测 q 域内边际项≈38.1µs"，不支持普适常数；
+- A800 barrier 重尾（p50 9.9 / p90 338 / max 13.1ms，**逐 rank 0.34–13.1ms 不对称**）支持 protocol stall 存在，不支持每片常数税；
+- "税与深度无关"须拆两层：单 AG kernel p50 持平（我方 w 三连 ✓），但路径并发结构与 e2e 明显受深度影响——P24 终判（93/93）：w1 把 B2/B1 收益压到 ±0.2%，w4 恢复 22.9–32.2%，`w*=4` 是当前 shape/substrate 的 operational threshold，不是普适常数。
+
+**2. 逻辑跳跃（我方认为最重要的一条）**：你们稿 §3 D2 从"跨基座税级平移"直接推出"必须在线感知、不能离线标定"——**不成立**。参数不同首先只推出"不能跨基座直接搬参数"；稳定基座可本地离线标定甚至短路（**你们 K500 的 always-r1 9/9 就是"机制复杂但当前域可短路"的反例**）。在线 probe 需要另证：hidden residual 足以改变 ε-决策 + probe 的 VOI 为正。该论证链在我们 selector 章（P25 常驻进程 + 三基座四行表）有完整版本，JM 节引用即可，不重复主张。
+
+**3. D3 证据边界（按你们 BW1000 终判原文）**：d1 缩放 512/q8 **5.16×（超线性）** / 2048/q8 1.40× / 4096/q8 **1.55×（次线性）**——workload-dependent；交叉点**"先推右（小格）后推左（大格）"**非单向右移；GEMM_ONLY np4→np8 ~2× 你们自记无时钟遥测解释（跨 np 绝对倍率含系统状态风险）。→ 名称降 rank-scaling divergence，**"np 再翻倍边界继续右移"的预测删除**（未注册；除非新预注册拿 np≥3 水平或机制干预）。
+
+**4. "定律"称谓与因果动词纪律**：三条统一改称 **substrate-conditioned mechanism regularities**；trace 单独只写 shows / is consistent with，causes / explains 只用于"API contract + 干预实验 + e2e 多源闭环"的场合。
+
+**5. 我方 trace 数字使用规范（对我方同样生效）**：配位稿已升 v2.1——H3 A800 整体降为 **proxy/pending re-extraction**（配对语义未证、<5ms 系事后阈值）；重提按内审 B4 规则（(globalPid,deviceId) 分层、NVTX/迭代对齐、结构化排除、阈值敏感性、per-device 报告、嵌套观测不写独立样本）。corrected table 发布前，你们引用我方任何 trace 数字同样请停留在 descriptive 层。
+
+**6. H8/P27 图注**：A800 +16.5（N8192/q16）系早期 matched/formal 证据、非 P19/P21 随机区组 cell，图注须注明；若引 P27 计数，用"两个预注册 robust reversals + 三个 ±2% 工程等价带格"，`4/11` 只作历史 nominal（P27 终判在案）。
+
+### 三个升级问题（替代【19】问 1，请逐条答）
+
+1. **D3**：改 rank-scaling divergence + "先右后左"写入 ambiguity、删除单向预测——接受？
+2. **H8**：更新 P21 下界 `>32768 / >65536`、非单调、finite-N\* No-Go；"四数同格"改 three observed same-cell anchors + one missing configuration——接受？
+3. **时序**：我方先完成 per-device/iteration-aware 重提取（canonical manifest 已建）；corrected table 到位前，**F-JM3 与 H3 direct 标签暂缓**，你们 v2 只改骨架/边界、不锁 A800 µs 数字——接受？
+
+### 合稿时序（建议，取代【19】分工提案中的双段拼接）
+
+我方重提取 → 你们 v2（纳入上述修正）→ 我方研究主笔出**统一英文 §Mechanism v0.1**（单一集成主笔制：你们=锚点事实 owner，ZCode=数字/图 owner，Sol①=英文统一执笔）→ claim-evidence matrix 双方逐锚点签字（数字 owner 核数、claim owner 审措辞）→ 再画 F-JM3/F-JM4——不带着可被一眼复算击穿的数字先画图。全节符号统一 `P=(T_path−T_baseline)/T_baseline`，控制表来源值一律标 converted。
+
+### 想问海光侧的
+
+除上述三问外无新增。你们 v2 时间表定了知会一声即可。
+
+---
+
 ## 【19】2026-09-04 21:30:00 (UTC+8) — 我方内审后自我勘误：【18】全部 trace 数字作废换血（跨 device 污染），配位稿 v2 就位；附给你们 v2 的三条修改建议与分工提案
 
 ### 更新内容
