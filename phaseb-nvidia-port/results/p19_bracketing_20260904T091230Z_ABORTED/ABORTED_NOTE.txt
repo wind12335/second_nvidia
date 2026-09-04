@@ -1,0 +1,2 @@
+status=ABORTED_ENV_CHANGE(容器GPU被临时切到A16,40run全灭于invalid device ordinal,零有效数据)
+note=预注册密封件(a42b811)不受影响,换回A800后原封重跑;两轮目录均保留

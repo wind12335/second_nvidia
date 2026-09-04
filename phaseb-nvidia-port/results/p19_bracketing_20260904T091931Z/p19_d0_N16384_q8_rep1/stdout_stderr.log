@@ -1,0 +1,1 @@
+RESULT run_id=p19_d0_N16384_q8_rep1 path=D0_FCOLLECT_SERIAL family=NVSHMEM candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=16384,K=2048,q=8] status=PASS failures=0

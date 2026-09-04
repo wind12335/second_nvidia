@@ -1,0 +1,1 @@
+RESULT run_id=p19_d1_N32768_q16_rep1 path=D1_PUSHSIG_OVERLAP family=NVSHMEM candidate=C0_DEFAULT shape=[P=4,m_local=2048,N=32768,K=2048,q=16] status=PASS failures=0

@@ -21,7 +21,7 @@ for N,q in [(12288,8),(16384,8),(16384,16),(32768,16)]:
             runs.append((N,q,path,rep))
 random.seed(20260904)
 random.shuffle(runs)
-with open(f'{out}/schedule.csv','w',newline='') as f:
+with open(f'{out}/schedule.csv','w') as f:
     w=csv.writer(f); w.writerow(['order','N','q','path','rep','run_id'])
     for i,(N,q,p,r) in enumerate(runs,1):
         w.writerow([i,N,q,p,r,f'p19_{p}_N{N}_q{q}_rep{r}'])
@@ -31,6 +31,7 @@ EOF
 # 2) 按 schedule 顺序执行
 PASS=0; FAIL=0
 while IFS=, read -r order N q path rep run_id; do
+  run_id=${run_id%$'\r'}; rep=${rep%$'\r'}
   [[ "$order" == "order" ]] && continue
   mkdir -p "$OUT/$run_id"
   timeout 1200 mpirun --allow-run-as-root --bind-to none -np 4 -mca coll ^hcoll \

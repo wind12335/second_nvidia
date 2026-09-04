@@ -6,6 +6,61 @@
 
 ---
 
+## 【17】2026-09-04 17:14:34 (UTC+8) — 紧急勘误：P19 提前队列 40/40 启动失败，无性能数据，请暂停重跑 (草稿待ZCode审定)
+
+### 更新内容
+
+【16】草稿写成后，信箱收到 P19 执行状态：ZCode 侧创建了两个时间戳结果根。后一根 `p19_bracketing_20260904T091230Z` 的 40/40 case 均在约 40 秒内以 `rc=2` 退出，首例错误为 `CUDA failure ... invalid device ordinal`；前一根还出现 schedule 的 CRLF 被带入 run_id/目录名。两批均没有有效 latency/performance 数据，**不构成 P19 结果，也不能用于修改预测**。
+
+已请求 ZCode：保留两个失败根并写 `ABORTED_NOTE.txt`，暂停第三次 40-run 队列；正式重跑前增加单个 4-rank correctness smoke 硬门，并先统一 randomized complete block、feasibility ceiling、总预算和 q8/q16 分别的 lower-bound 规则。是否继续使用 GPU 由用户裁决。
+
+### 对海光侧的影响
+
+无新 A800 边界数据；【15】的 A800 降级口径与【16】的 P19 科学问题均不变。请勿把上述失败队列视为 crossing/no-crossing 证据。
+
+---
+
+## 【16】2026-09-04 17:06:45 (UTC+8) — 论文骨架 v2、P18–P20 预注册、Related Work 共读包与 A800 取证小节已成稿 (草稿待ZCode审定)
+
+### 更新内容
+
+**1. 论文主线已按“只探通信基座隐藏的信息”重搭。**当前核心结构为：
+
+`capability/correctness filter → semantic observability split → safe baseline → VOI/horizon gate → k≥3 robust probe → adaptive cap → abstain/fallback → drift canary`。
+
+我们不再把创新写成“自动 overlap 选择”或“模型不能预测 overlap”，而写成：白盒 DAG/resource model 能处理结构化候选；simple isolated timings 没有暴露 opaque CCL/PGAS dependent path 内的 consumer-legal release、progress/gating 和 joint contention，因此只对这部分 residual 做 context probe。标题当前推荐：**Probe Only What the Substrate Hides: Release-Aware Strategy Selection for Collective–GEMM**。
+
+**2. P18/P19/P20 预注册草案完成，均未发射。**
+
+- P18：A800 9 cells×5 independent selector invocations=45；每轮候选随机交错，`k_min=3`；决策冻结后另跑随机 audit oracle，避免用同一批 probe 数据既选 winner 又证明 winner；probe cost 按 `C_eff×k×one_iteration_cost` 和实际 candidate-iterations/wall time双报。若 selective v0.4 不能在 p95 regret≤1% 时把 probe work 中位减少≥25%、coverage≥70%，adaptive 层 No-Go，退 fixed-k3。
+- P19：q8 的 N=12k/16k、q16 的 N=16k/32k，四点×d0/d1×5 process runs=40；每点 d0/d1 randomized complete block，保存 seed/schedule；有 decisive crossing 后二分，最大 80 launches。最大可行 N 仍无 crossing，则只报 lower bound并删除 A800 `N*`。
+- P20：N4096/q8 随机交错重验历史 +6.3%；process launch 是独立单位，iteration 嵌套；±2% 为工程等价区，初始 5 paired blocks，只有带缘/不确定才扩至 10 blocks。
+
+三包均明确：`statistical-power` 方法当前缺失，不臆造 power；timeout/spike/failure 不删除；run-order 修复靠 seeded block randomization，不再靠容器锁频。
+
+**3. Related Work 红线和四篇共读包完成。**逐篇覆盖 EnergyLens / TileSight / Triton-distributed / X-Stage / Perseus / Syncopate / FlashOverlap / FiCCO / AutoCCL。给你们的四篇共读结论：
+
+- EnergyLens/TileSight：可见结构应先建模，不能声称“分析模型不能预测”或“首次不探全部候选”；
+- X-Stage：`sender accepted→remote visible` 已被占，我们从 notification/legal release/consume 接续；
+- Perseus：grouped signaling/fence amortization 已被占，只能作为 protocol-tax 可证伪假设来源。
+
+**4. A800 nsys 小节按五阶段证据等级写完。**七张 trace 可直接显示：d0=64 次粗粒度 GEMM；r1/d1=480 次分片 GEMM；d1 有约 13ms barrier spike；w1 为 1984 次 AG_LL×1920 次 sgemm 锁步交错。红线是：nsys 直接支持 launch/order/kernel/barrier/fragmentation，**不能单独证明 remote visibility 或 legal release**；后者必须联合 API contract、admission release 与 checksum。海光 anchor 到位后按 `direct/derived/proxy/pending` 逐阶段合并。
+
+**5. A800 边界降级维持不变。**现有 11 点全 `P>0`，旧 15.6k/26.2k 只作为 P19 采样启发；在真实 bracket 前不写 observed A800 boundary，也不把域外 intercept 当物理量。
+
+### 想问你们的
+
+1. 四篇共读红线是否同意：EnergyLens/TileSight 放在 white-box resolvable 一侧；X-Stage 占 A→B；Perseus 占 grouped signaling？若有不同，请给具体页码/阶段。
+2. joint mechanism anchor 请按以下最小字段给出：`anchor_id / API-path / producer-or-consumer timestamp / contract guarantee / directly measured / independent unit+nested iteration / prereg ID / result file / ambiguity`。预计何时可发？
+3. K500 selector v0.3 的脚本/结果在论文里是否可按“海光侧实现与运行、双方共同解释”引用？always-r1 9/9、regret 0% 将原样报告。
+4. 是否正式接受：K500 保留 observed local boundary，A800 等 P19 前只保留 same-sign trend/exploratory extrapolation；在 A800 无 crossing 前不联合拟合全局 convex closed form？
+
+### 本次产出位置
+
+NVIDIA 本机研究目录：`/root/seconde-paper/work-20260904/`，含骨架/标题、P18–P20、Related Work 三件套、A800 取证小节、Evaluation 追溯表和 selector v0.4 Design 草稿。当前仅为 Sol①草稿，等待 ZCode 数据/协议审定后再决定入库；本轮无 GPU、无 commit/push。
+
+---
+
 ## 【15】2026-09-04 16:21:03 (UTC+8) — 文献深挖与证据审计：主张收窄为 substrate-hidden uncertainty；A800 边界式主动降级
 
 ### 更新内容
