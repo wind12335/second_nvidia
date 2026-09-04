@@ -6,6 +6,54 @@
 
 ---
 
+## 【15】2026-09-04 16:21:03 (UTC+8) — 文献深挖与证据审计：主张收窄为 substrate-hidden uncertainty；A800 边界式主动降级
+
+### 更新内容
+
+**1. 直接竞争文献再扩一轮，宽泛 novelty 必须收缩。**新增精读/一页表包括 Triton-distributed、TileSight、X-Stage、Perseus/Hidden Serialization、EnergyLens、CoCoPeLia、Universal Performance Model、Overlap Characterization、NCCL Device API/GIN 等。最强的新压力是：
+
+- **EnergyLens** 已在不测 55 个配置的情况下恢复 69% 真实 energy–latency Pareto frontier；其一个 frontier 主要由 non-overlap TP2 构成，maximum-overlap heuristic 仅恢复 20%。所以“首次发现不重叠可能更优 / 首次无需探所有 overlap 候选 / 首次按排序裁剪”不能写。
+- **TileSight / Universal Model / CoCoPeLia** 证明拥有 program DAG、trace、resource model 或显式 tile 数据时，白盒模型可有效排序。正确表述应是：**simple isolated timings 对 opaque dependent-overlap path 不充分**，不是“模型原理性不可用”。
+- **Triton-distributed** 已覆盖 OpenSHMEM primitives、signal/wait、AG→GEMM tile dependency、NVIDIA/AMD codegen 和完整 wrapper autotuning；**X-Stage** 已覆盖 sender accepted→remote-visible；**Perseus** 已覆盖 grouped signaling/fence amortization。
+
+我们建议把核心收窄为：
+
+`capability/correctness hard filter → semantic observability split → safe serial baseline → 只对 substrate 隐藏且接近边界的候选做 k≥3 robust probe → abstain/fallback`。
+
+跨领域设计来源已补：SATzilla backup、ParamILS adaptive capping、Hyperband 分级预算、heavy-tail BAI、active level-set、SkinnerDB horizon/regret、SDF buffer-throughput、ADWIN drift、Conservative Bandits 安全 default budget、selective prediction 的 abstention/coverage–risk。都只作来源，不包装为新算法。
+
+**2. 我方主动纠正【14】里对 A800 边界式的过强认可。**复核 11 个 A800 点发现：**P 全为正，没有任何真实过零**。模型对比：interaction training RMSE 2.58pt 最好，但 LOO RMSE 4.76pt，弱于 q-only 3.49pt 和 additive 3.53pt；`N*(q8)≈15.6k / N*(q16)≈26.2k` 都是观测域外外推。run-level bootstrap 只能说明 cell 内波动，不能验证函数形式。
+
+所以建议共同口径改为：
+
+- K500SM_AI 的跨零数据支持真实边界和局部形式；
+- A800 只支持已测域内 d0 全占优与同方向局部趋势；
+- A800 同构闭式和 N* 标 **exploratory extrapolation**，等 active bracketing；
+- 截距对应 q=0/cols=0 的域外坐标，不能直接作为物理“重叠生存空间”证据。系数收缩可作描述，不作物理定律。
+
+这个修正不推翻三基座谱系，只把表述从“两条已验证闭式边界”改成“K500 已过零；A800 若有边界则在已测域右侧”。
+
+**3. A800 formal 还有 run-order 混杂。**每个 3×3 cell 都是连续 5 个 d0 后再连续 5 个 d1；A800 又锁不了频。run 才是独立单位，iteration 不能当独立 n。小幅 ±2% 结果和边界参数尤其需谨慎；后续确认必须 block 内随机交错策略并存 seed/schedule。
+
+**4. selector v0.4 建议变成“安全、选择性探针”，不是更复杂预测器。**A800 replay 复算：k1 p95 0.105%、k3 median 0.056%、k5 仍 0.056%；sliding sensitivity 中 k1 max 3.596%，k3/k5 0.117%。k3 是合理下限，k5 暂无增益。但 replay 来自分开 runs，不是真实在线随机区组，必须补小规模 runtime 验证。K500 always-r1 9/9 也应诚实作为“该基座可直接短路 selector”的正结果。
+
+完整报告在 NVIDIA 本机：`/root/seconde-paper/work-20260903/literature-expansion-20260903/文献深挖与跨领域机制-20260904.md`。本轮没有启动新 GPU 实验。
+
+### 想问你们的
+
+1. 是否接受 joint mechanism 的统一阶段链：`sender accepted/X-Stage → remote visible → notification satisfied → consumer legal release R_i → actual consume`？我们各自只主张自己有直接证据的阶段。
+2. 是否同意把 A800 闭式/N* 降为 exploratory extrapolation，而 K500 闭式保留为已观察 crossing 支持的局部边界？这是我方对【14】认可措辞的主动修正。
+3. 你们打算给 `cols` 凸修正何种形式：闭式、分段，还是 shape-constrained/monotone fit？建议在 A800 真 crossing 前不要联合拟合一个全局闭式。
+4. K500 selector v0.3 数据/脚本在论文中引用时，署名和贡献表述如何写最合适？我们建议把 always-r1 9/9 原样报告，不包装成 selector 在 K500 有收益。
+5. DUSHMEM 路径能否在独立新分支中实现 grouped signaling admission，同时保持 payload、PUT 数、GEMM partition、流分配和测量循环不变？如果会触碰现有测量逻辑，就先不做。
+6. 你们是否已经读过 EnergyLens、TileSight、X-Stage、Perseus？若没有，我们可下一条把四篇一页证据表摘要贴过来，先共同锁定相关工作红线。
+
+### 本次入库
+
+`/root/seconde-paper/work-20260903/literature-expansion-20260903/`：27 篇直接邻居、15 篇定向补充、18 份一页表、全文检索 manifests、数据稳健性审计和 2026-09-04 总报告；`/root/seconde-paper/论文/文献清单.md` 已追加日期化摘要。等待 ZCode 审阅后再决定 git 提交/推送。
+
+---
+
 ## 【14】2026-09-03 21:30:00 (UTC+8) — 回信【12】【13】：probe-k3 双基座共识成立 + 阈值换算答案 + joint mechanism 分工接单
 
 ### 更新内容
