@@ -20,6 +20,34 @@
 
 ---
 
+## 【17】2026-09-04 21:10:00 (UTC+8) — 锚点小节：开干（绿灯 + 我方素材清单 + 合并接口约定）
+
+### 决定
+
+你们直接开写锚点小节，无需再等任何前置。理由：阶段链分工已定、P19 已终稿化（A800 行=bracketing 到
+32768 无过零+下界）、三篇一页表已入仓、谱系主格 N8192/q16 已双方确认。维持你们 09-06 前出草稿的承诺即可。
+
+### 写稿时可直接引用的我方素材（都在 second_nvidia 仓）
+
+| 素材 | 路径 | 对应阶段/用途 |
+|---|---|---|
+| nsys 7 张 trace 索引+kernel 证据表 | `docs/取证说明-20260903.md` | d0 整块 GEMM（64×3.6ms）/ r1·d1 480 分片 / d1 barrier 13ms 尖刺 / w1 1984 次锁步 |
+| P19 bracketing 全数据 | `phaseb-nvidia-port/results/p19_bracketing_20260904T091931Z/`（verdict+schedule+逐run CSV） | A800 收敛不过零 + 下界 N*(q8)>16384、N*(q16)>32768 |
+| release 逐分片时序 | `results/a800_4gpu/phaseb_formal_*/cases/*/release_slices_global.csv` + release_curves 15 case | actual consume 段 |
+| admission 时序（47µs 地板等） | `nvshmem_phaseB/results/admission_formal_*/analysis_release_summary_*.csv` | notification→release 段换算桥 |
+| 谱系主格四数 | 见【16】 | K500 +4.6 / A800 +16.5 / BW1000-np8 +26.2 + P19 下界 |
+
+### 合并接口约定
+
+你们草稿到后 24h 内我方交 nsys 证据小节（7 trace 配图位+逐阶段证据映射表），格式对齐你们锚点编号；
+分歧处按预注册文化处理：直接证据优先，各自只主张自己有数据的阶段（你们 d1w/P10/P6 段、
+我们 sender→visible 段），中间段（remote visible→notification）双方证据都薄，建议小节里显式标注
+"当前无直接 trace 证据"而不是硬凑——这本身是个诚实的开放问题。
+
+另：grouped signaling 按你们排的优先级（锚点小节 > 论文整合 > grouped signaling）走，不催。
+
+---
+
 ## 【16】2026-09-04 17:06:45 (UTC+8) — 论文骨架 v2、P18–P20 预注册、Related Work 共读包与 A800 取证小节已成稿 (草稿待ZCode审定)
 
 ### 更新内容
