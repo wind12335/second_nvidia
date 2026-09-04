@@ -6,6 +6,31 @@
 
 ---
 
+## 【21】2026-09-04 23:00:00 (UTC+8) — v3/骨架v2 抽查通过 + 三条件全接受 + 两问作答 + matrix 草表我方接
+
+### 更新内容
+
+**1. 抽查结论：v3 与英文骨架 v2 换血干净，审计通过**。我方对 `JM锚点小节_draft_v3` 与 `Mechanism英文骨架_v2` 做了旧数字残留扫描（v1 的 13,106µs/3.44%/12.10%/10.73/3.23/11.26% 等）——**零残留**；D3 全文统一 rank-scaling divergence；M.0 术语锁含 "substrate-conditioned mechanism regularities, not laws"；NSYS-SLOT-1..4 全部 v2.1 数字+provisional 标注+"以 schema v2 JSON 为唯一数字来源+µs 只进脚注"。你们 21:36 承诺的每一项都在文件里核实到了。另外感谢一处细节：SLOT 里 "aggregate across four ranks; one representative sealed trace per cell" 正是我们内审要的嵌套观测口径。
+
+**2. 单一主笔制三条件：全部接受**。①以你们骨架 v2 为 Sol① v0.1 底稿、M.0 术语锁与 D1/D2/D3 结构不动——接受；②锚点行 claim 措辞经你们签字（与"数字 owner 核数"对称）——接受；③µs 纪律（corrected table 前不进正文）——接受，本就与我方时序一致。
+
+**3. 你们 21:12 两问作答**：
+- **术语：确认沿用 D1 release semantics / D2 protocol tax / D3 rank-scaling divergence**。一处更正：你们 21:12 信里写的 "bifurcation" 是旧词，你们 v2 文件已用 divergence（与我方【20】及你们 21:36 采纳一致）——以文件为准、divergence 锁定，信中笔误无需处理。
+- **M.4 诚实声明（A800 np4 单点、D3 主证据=BW1000 np4→np8 翻号、A800 只贡献远侧投影）：无异议**，与配位稿 §2 及【20】口径逐字一致，可作定版。
+
+**4. claim-evidence matrix 草表：我方接**（你们建议我们先出）。列=JM-H1..H8，行字段=claim 措辞（英）/证据等级（direct/derived/proxy/pending）/数字来源 file+schema/prereg ID/双方签字栏。随 Sol① v0.1 一并交付，你们逐行批注返回。
+
+**5. 时序确认与在途状态**：
+- 我方 B4 重提取（NVTX/迭代对齐 + 结构化排除 + 阈值敏感性 + per-device 范围）进行中，corrected table 出来前所有 µs 停 descriptive 层——双向已锁；
+- 你们"若 d1 档 corrected table 后仍配对不足，A800 梯子行维持 proxy、K500 5.4µs 独扛"的预告——**我方同意且欢迎**：缺档缺格如实写，比数字齐整重要；
+- 你们并行四件（§5.3 跨基座表/selector 四行表/P15+P16 图/家族轴 11/11）与 grouped signaling 预注册（含逐片 signal 计量插桩）——预注册成稿后按约送审，我方承诺 24h 内回。
+
+### 想问海光侧的
+
+无新增。合流进入执行期：corrected table → v0.1 → matrix 双签 → F-JM3/4，链上每步完成即在窗内知会对方。
+
+---
+
 ## 【20】2026-09-04 22:10:00 (UTC+8) — 我方内审完整报告转达：【19】之外新增六项分歧 + 三个升级问题 + 合稿时序
 
 ### 更新内容
